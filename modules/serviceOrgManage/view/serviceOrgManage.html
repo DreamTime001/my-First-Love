@@ -1,0 +1,304 @@
+<div ng-controller="serviceOrgManageController as vm" class="innerTop" ng-init="vm.getPrvnc()">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">服务机构管理</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>服务机构管理</h2>
+            </div>
+            <div class="queryDiv">
+                <div class="queryDivIn">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.prvnc"
+                                        ng-options="o.cd_pr as o.name for o in vm.prvncList"
+                                        ng-change="vm.getSelect(vm.query.prvnc)">
+                                    <option value="">请选择省</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.citys"
+                                        ng-options="o.cd_city as o.name for o in vm.province">
+                                    <option value="">请选择市</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w160" ng-model="vm.query.isBlckLst"
+                                        ng-options="o.isBlckLst as o.name for o in vm.isBlackLists">
+                                    <option value="">是否黑名单</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control" placeholder="请输入关键字（机构名称）"
+                                       ng-model="vm.query.orgName">
+                            </div>
+                            <div class="f_l mb10">
+                                <input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="buttonList" ng-if="vm.list.length > 0">
+                <a href="javascript:;" class="add" ng-click="vm.showPubPop('add')">新增</a>
+                <a href="javascript:;" class="edit" ng-click="vm.showPubPop('edit')">编辑</a>
+                <a href="javascript:;" class="joinBlacklist" ng-click="vm.showPubPop('addBlack')">加入黑名单</a>
+                <a href="javascript:;" class="remBlank" ng-click="vm.showPubPop('removeBlack')">移除黑名单</a>
+                <a href="javascript:;" class="branch" ng-click="vm.showPubPop('branch')">分支机构账户</a>
+                <a href="javascript:;" class="alt delete" ng-click="vm.showPubPop('delete')">删除</a>
+            </div>
+            <div class="noDataDiv" ng-if="!vm.list.length">
+                <div class="noData">
+                    <div class="noDataBg"></div>
+                    <p>暂时没有数据～</p>
+                </div>
+            </div>
+            <table class="table tableInfo" ng-if="vm.list.length > 0">
+                <tr>
+                    <th></th>
+                    <th>地点</th>
+                    <th>类型</th>
+                    <th class="tabCell" style="width: 5%">机构名称</th>
+                    <th class="tabCell" style="width: 5%">营业执照</th>
+                    <th>剩余天数</th>
+                    <th>手机号码</th>
+                    <th class="tabCell" style="width: 5%">公司介绍</th>
+                    <th class="tabCell" style="width: 5%">详细地址</th>
+                    <th>黑名单期限</th>
+                    <!--<th>是否黑名单</th>-->
+                </tr>
+                <tr ng-repeat="obj in vm.list" ng-click="vm.selectThis(obj)" ng-class="{'hover':obj.checked}">
+                    <td><i ng-class="{'checked':obj.checked}"></i></td>
+                    <td ng-bind="obj.ct"></td>
+                    <td ng-bind="obj.srvc_tp"></td>
+                    <td >
+                        <div class="tabCell" ng-bind="obj.cmp_nm" ></div>
+                    </td>
+                    <td>
+                        <div class="tabCell" ng-bind="obj.lcns_no" ></div>
+                    </td>
+                    <td ng-bind="obj.daysum"></td>
+                    <td ng-bind="obj.phone"></td>
+                    <td>
+                        <div class="tabCell" ng-bind="obj.dsc" ></div>
+                    </td>
+                    <td>
+                        <div class="tabCell" ng-bind="obj.address"></div>
+                    </td>
+                    <td ng-bind="obj.blckLstDate"></td>
+                    <!--<td ng-bind="obj.isOrFor"></td>-->
+                </tr>
+            </table>
+            <div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+        </div>
+    </div>
+    <!--添加修改用户-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showDataMes">
+        <div class="memberPopEdit gesh">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <div class="leftKey">所在城市:</div>
+                    <div class="rightVal">
+                        <div class="f_l mr15 mb10">
+                            <select class="form-control w150" ng-model="vm.trackEditObj.prvnc"
+                                    ng-options="o.cd_pr as o.name for o in vm.prvncList"
+                                    ng-change="vm.getSelect(vm.trackEditObj.prvnc)">
+                                <option value="">请选择省</option>
+                            </select>
+                        </div>
+                        <div class="f_l mr15 mb10">
+                            <select class="form-control w150" ng-model="vm.trackEditObj.ct"
+                                    ng-options="o.cd_city as o.name for o in vm.province">
+                                <option value="">请选择市</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">选择服务分类:</div>
+                    <div class="rightVal">
+                        <select class="form-control w300" ng-model="vm.trackEditObj.srvc_tp"
+                                ng-options="o.numberVal as o.zcName for o in vm.serverList">
+                            <option value="">请选择</option>
+                        </select>
+
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">机构名称:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="机构机构名称"
+                               ng-model="vm.trackEditObj.cmp_nm">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">营业执照编号:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入营业执照编号"
+                               ng-model="vm.trackEditObj.lcns_no">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">联系电话:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入联系电话"
+                               ng-model="vm.trackEditObj.tel">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">对公账户开户行:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入对公账户开户行"
+                               ng-model="vm.trackEditObj.bankAccount">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">对公账号:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入名称"
+                               ng-model="vm.trackEditObj.accountNo">
+                    </div>
+                </li>
+                <li style="height:auto;overflow: hidden">
+                    <div class="leftKey">公司介绍:</div>
+                    <div class="rightVal">
+                        <textarea type="text" class="form-control w300 h80" placeholder="请输入公司介绍"
+                                  ng-model="vm.trackEditObj.dsc" id="dsc"></textarea>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">详细地址:</div>
+                    <div class="rightVal">
+                        <textarea type="text" class="form-control w300 h80" placeholder="请输入详细地址"
+                                  ng-model="vm.trackEditObj.address" id="address"></textarea>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toAdd()"
+                       ng-if="vm.iconType == 'add'">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toEdit()"
+                       ng-if="vm.iconType == 'edit'">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--加入黑名单-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showBlack">
+        <div class="middleEdit" style="height: 410px;">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li style="border-bottom:0">
+                    <div class="leftKey">黑名单期限:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w130 mr5" placeholder="请输入开始时间"
+                               ng-model="vm.blackInfObj.startDate" readonly id="startDate" style="float:left">
+                        <input type="text" class="form-control w130 mr5" placeholder="请输入结束时间"
+                               ng-model="vm.blackInfObj.endDate" readonly id="endDate" style="float:left">
+                    </div>
+                </li>
+                <li style="border-bottom:0">
+                    <div class="leftKey">剩余天数:</div>
+                    <div class="rightVal">
+                        <span ng-if="vm.distanceTime == null" class="c_ccc">无</span>
+                        <span ng-bind="vm.distanceTime + '天'" ng-if="vm.distanceTime != null"></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">原因:</div>
+                    <div class="rightVal">
+                        <textarea type="text" class="form-control w300 h110" placeholder="请输入公司简介"
+                                  ng-model="vm.blackInfObj.rvwInf" id="rvwInf"></textarea>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.toAddBlack()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--分支机构账户-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showBranch">
+        <div class="branchPop">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <div class="inDiv">
+                <ul ng-repeat="obj in vm.branchList">
+                    <li>
+                        <select class="form-control w150" ng-model="obj.chid_prvnc"
+                                ng-options="o.cd_pr as o.name for o in vm.prvncList"
+                                ng-change="vm.getBranchCity(obj)">
+                            <option value="">请选择省</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select class="form-control w150" ng-model="obj.chid_ct"
+                                ng-options="o.cd_city as o.name for o in obj.chid_ctList">
+                            <option value="">请选择市</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" class="form-control" placeholder="联系人"
+                               ng-model="obj.chid_per">
+                    </li>
+                    <li>
+                        <input type="text" class="form-control" placeholder="联系电话"
+                               ng-model="obj.chid_tel">
+                    </li>
+                    <li class="last">
+                        <i class="add" ng-click="vm.addBranch()" ng-if="$index == vm.branchList.length -1"></i>
+                        <i class="delete" ng-click="vm.deleteBranch($index,obj.sid)" ng-if="vm.branchList.length > 1"></i>
+                    </li>
+                </ul>
+            </div>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.toBranch()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--确认-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showAlert">
+        <div class="alertEdit">
+            <div class="title">
+                <h2>提示</h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <p style="text-align: center;font-size:16px;margin-top:10px" ng-if="vm.iconType == 'remove'">您确定移除此黑名单吗？</p>
+                    <p style="text-align: center;font-size:16px;margin-top:10px" ng-if="vm.iconType == 'delete'">确认删除吗？</p>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toRemoveBlack()" ng-if="vm.iconType == 'remove'">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toDeleServers()" ng-if="vm.iconType == 'delete'">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,174 @@
+{
+  "data": {
+    "usrName": "DT",
+    "lastLogin": "20180122103522",
+    "menuList": [
+      {
+        "title": "会员管理",
+        "list": [
+          {
+            "name": "会员一览",
+            "url": "membersList",
+            "class": "membersList"
+          },
+          {
+            "name": "未完善会员一览",
+            "url": "unMembersList",
+            "class": "unMembersList"
+          },
+          {
+            "name": "会员审核",
+            "url": "membershipAudit",
+            "class": "membershipAudit"
+          },
+          {
+            "name": "黑名单管理",
+            "url": "blacklist",
+            "class": "blacklist"
+          }
+        ]
+      },
+      {
+        "title": "资产管理",
+        "list": [
+          {
+            "name": "资产审核",
+            "url": "assetAudit",
+            "class": "assetAudit"
+          }
+        ]
+      },
+      {
+        "title": "交易管理",
+        "list": [
+          {
+            "name": "资产交易订单",
+            "url": "assetOrder",
+            "class": "assetOrder"
+          },
+          {
+            "name": "要约交易订单",
+            "url": "contractOrder",
+            "class": "assetOrder"
+          }
+        ]
+      },
+      {
+        "title": "客服管理",
+        "list": [
+          {
+            "name": "咨询管理",
+            "url": "consultingManage",
+            "class": "consultingManage"
+          },
+          {
+            "name": "服务管理",
+            "url": "serviceManage",
+            "class": "serviceManage"
+          },
+          {
+            "name": "会员追踪管理",
+            "url": "trackingManage",
+            "class": "trackingManage"
+          }
+        ]
+      },
+      {
+        "title": "合同管理",
+        "list": [
+          {
+            "name": "合同管理",
+            "url": "contractManage",
+            "class": "contractManage"
+          },
+          {
+            "name": "合同模板设置",
+            "url": "contractSetting",
+            "class": "contractSetting"
+          }
+        ]
+      },
+      {
+        "title": "结算中心",
+        "list": [
+          {
+            "name": "转账指令确认",
+            "url": "transferOrderConf",
+            "class": "transferOrderConf"
+          }
+        ]
+      },
+      {
+        "title": "CMS管理",
+        "list": [
+          {
+            "name": "Banner管理",
+            "url": "bannerManage",
+            "class": "bannerManage"
+          },
+          {
+            "name": "关于我们",
+            "url": "aboutUs",
+            "class": "aboutUs"
+          },
+          {
+            "name": "新闻公告",
+            "url": "newsBulletin",
+            "class": "newsBulletin"
+          }
+        ]
+      },
+      {
+        "title": "后台综合管理",
+        "list": [
+          {
+            "name": "用户组管理",
+            "url": "userGroupManage",
+            "class": "userGroupManage"
+          },
+          {
+            "name": "用户管理",
+            "url": "userManage",
+            "class": "userManage"
+          },
+          {
+            "name": "数据字典维护",
+            "url": "dataDictionary",
+            "class": "dataDictionary"
+          }
+        ]
+      },
+      {
+        "title": "第三方服务机构管理",
+        "list": [
+          {
+            "name": "服务机构管理",
+            "url": "serviceOrgManage",
+            "class": "serviceOrgManage"
+          }
+        ]
+      },
+      {
+        "title": "尽调服务",
+        "list": [
+          {
+            "name": "尽调服务管理",
+            "url": "surveyServiceManage",
+            "class": "surveyServiceManage"
+          },
+          {
+            "name": "分成查询",
+            "url": "partitionQuery",
+            "class": "partitionQuery"
+          },
+          {
+            "name": "尽调模板上传",
+            "url": "surveyTempUp",
+            "class": "surveyTempUp"
+          }
+        ]
+      }
+    ]
+  },
+  "result": "success"
+}

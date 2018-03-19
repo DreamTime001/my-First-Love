@@ -1,0 +1,114 @@
+{
+  "ok": true,
+  "errCode": 200,
+  "messageType": "I",
+  "comment": null,
+  "messageCode": null,
+  "message": null,
+  "data": {
+    "pageNum": 2,
+    "pageSize": 10,
+    "size": 10,
+    "startRow": 11,
+    "endRow": 20,
+    "total": 37,
+    "pages": 4,
+    "list":[{
+      "crt_tm": "20171117103909",
+      "id": 553,
+      "mbl": "18516587050",
+      "openAccount": false,
+      "org_cd": 292,
+      "usr_cd": "18516587050",
+      "zuiSum": "5"
+    }, {
+      "crt_tm": "20171116105411",
+      "id": 552,
+      "mbl": "18521519602",
+      "openAccount": false,
+      "org_cd": 291,
+      "usr_cd": "18521519602",
+      "zuiSum": "0"
+    }, {
+      "crt_tm": "20171101165342",
+      "id": 551,
+      "mbl": "15002115819",
+      "openAccount": false,
+      "org_cd": 286,
+      "usr_cd": "15002115819",
+      "zuiSum": "0"
+    }, {
+      "crt_tm": "20171101151212",
+      "id": 550,
+      "mbl": "15800858400",
+      "openAccount": false,
+      "org_cd": 285,
+      "usr_cd": "15800858400",
+      "zuiSum": "6"
+    }, {
+      "crt_tm": "20171030160802",
+      "id": 548,
+      "mbl": "15174197117",
+      "openAccount": false,
+      "org_cd": 278,
+      "usr_cd": "15174197117",
+      "zuiSum": "28"
+    }, {
+      "crt_tm": "20171030150430",
+      "id": 547,
+      "mbl": "15216713415",
+      "openAccount": false,
+      "org_cd": 277,
+      "usr_cd": "15216713415",
+      "zuiSum": "10"
+    }, {
+      "crt_tm": "20171024174144",
+      "id": 530,
+      "mbl": "15021451315",
+      "openAccount": false,
+      "org_cd": 254,
+      "usr_cd": "15021451315",
+      "zuiSum": "0"
+    }, {
+      "crt_tm": "20171024174144",
+      "id": 528,
+      "mbl": "18729550887",
+      "openAccount": false,
+      "org_cd": 252,
+      "usr_cd": "18729550887",
+      "zuiSum": "2"
+    }, {
+      "crt_tm": "20171020210745",
+      "id": 527,
+      "mbl": "18616399085",
+      "openAccount": false,
+      "org_cd": 251,
+      "usr_cd": "18616399085",
+      "zuiSum": "27"
+    }, {
+      "crt_tm": "20171020194812",
+      "id": 526,
+      "mbl": "13787361601",
+      "openAccount": false,
+      "org_cd": 250,
+      "usr_cd": "13787361601",
+      "zuiSum": "1"
+    }],
+    "firstPage": 1,
+    "prePage": 1,
+    "nextPage": 3,
+    "lastPage": 4,
+    "isFirstPage": false,
+    "isLastPage": false,
+    "hasPreviousPage": true,
+    "hasNextPage": true,
+    "navigatePages": 8,
+    "navigatepageNums": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "dataMap": {}
+}

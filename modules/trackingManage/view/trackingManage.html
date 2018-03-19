@@ -1,0 +1,130 @@
+<div  ng-controller="trackingManageController as vm" class="innerTop">
+	<ol class="breadcrumb">
+		<li>
+			<a href="javascript:;" ui-sref="home" >首页</a>
+		</li>
+		<li class="active">会员追踪管理</li>
+	</ol>
+	<div class="pLR30">
+		<div class="rightDiv">
+			<div class="rightContTitle">
+				<h2>会员追踪管理</h2>
+			</div>
+			<div class="queryDiv">
+				<div class="queryDivIn">
+					<form class="form-horizontal">
+						<div>
+							<div class="f_l mr15 mb10">
+								<select class="form-control w150" ng-model="vm.query.type"
+										ng-options="o.type as o.name for o in vm.typeList">
+									<option value="">会员类型</option>
+								</select>
+							</div>
+							<div class="f_l mr15 mb10">
+								<select class="form-control w150" ng-model="vm.query.prvnc"
+										ng-options="o.cd_pr as o.name for o in vm.prvncList"
+										ng-change="vm.getSelect(vm.query.prvnc)">
+									<option value="">请选择省</option>
+								</select>
+							</div>
+							<div class="f_l mr15 mb10">
+								<select class="form-control w150" ng-model="vm.query.city"
+										ng-options="o.cd_city as o.name for o in vm.provinceList">
+									<option value="">请选择市</option>
+								</select>
+							</div>
+							<div class="f_l mr15 mb10">
+								<select class="form-control w150" ng-model="vm.query.creatTime"
+										ng-options="o.type as o.name for o in vm.creatTimeList">
+									<option value="">访问时间</option>
+								</select>
+							</div>
+							<div class="f_l mr15 mb10">
+								<input type="text" class="form-control" placeholder="请输入关键字（名称）"
+									   ng-model="vm.query.orgNameOrStnm">
+							</div>
+							<div class="f_l mb10">
+								<input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+								<input class="btn btn-warning" type="submit" value="重置" ng-click="vm.resetQuery()">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="buttonList" ng-if="vm.list.length > 0">
+				<!--<a href="javascript:;" class="view" ng-click="vm.singleClick('view')">查看</a>
+				<a href="javascript:;" class="edit" ng-click="vm.singleClick('edit')">审核</a>-->
+				<a href="javascript:;" class="track" ng-click="vm.trackList()">跟踪记录</a>
+				<!--<a href="javascript:;" class="track" ng-click="vm.logList()">追踪管理</a>-->
+				<!--<a href="javascript:;" class="examine">审核</a>-->
+				<!--<a href="javascript:;" class="remBlank">移除黑名单</a>-->
+				<!--<a href="javascript:;" class="shelves">上架</a>-->
+				<!--<a href="javascript:;" class="shelf">下架</a>-->
+				<!--<a href="javascript:;" class="logView">日志查看</a>-->
+				<!--<a href="javascript:;" class="assetView">资产信息查看</a>-->
+				<!--<a href="javascript:;" class="orgView">机构信息查看</a>-->
+				<!--<a href="javascript:;" class="cancelOrd">取消订单</a>-->
+			</div>
+			<div class="noDataDiv" ng-if="!vm.list.length">
+				<div class="noData">
+					<div class="noDataBg"></div>
+					<p>暂时没有数据～</p>
+				</div>
+			</div>
+			<table class="table tableInfo" ng-if="vm.list.length > 0">
+				<tr>
+					<th></th>
+					<th>机构名称</th>
+					<th>所在城市</th>
+					<th>账号</th>
+					<th>联系电话</th>
+					<th>创建时间</th>
+				</tr>
+				<tr ng-repeat="member in vm.list" ng-click="vm.selectThis(member)" ng-class="{'hover':member.checked}">
+					<td><i ng-class="{'checked':member.checked}"></i></td>
+					<td ng-bind="member.stName"></td>
+					<td ng-bind="member.cityList"></td>
+					<td ng-bind="member.logName"></td>
+					<td ng-bind="member.mobile"></td>
+					<td ng-bind="member.crTime"></td>
+				</tr>
+			</table>
+			<div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+		</div>
+	</div>
+	<!--弹出层-->
+	<div class="mask blackMask mask_visible" ng-if="vm.showListtrack">
+		<div class="listPop">
+			<div class="title">
+				<h2 ng-bind="vm.titleView"></h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<ul class="inDiv" style="height: 120px;margin-top: 20px;">
+				<li>
+					<div class="leftKey">机构名称:</div>
+					<div class="rightVal" ng-bind="vm.stName"></div>
+				</li>
+				<li style="border-bottom: 1px dashed #dcdcdc">
+					<div class="leftKey">所在地区:</div>
+					<div class="rightVal" ng-bind="vm.cityList"></div>
+				</li>
+				<li style="border-bottom: 1px dashed #dcdcdc">
+					<div class="leftKey">账号:</div>
+					<div class="rightVal" ng-bind="vm.logName"></div>
+				</li>
+			</ul>
+			<div class="scroll">
+				<table class="table tableInfo">
+					<tr>
+						<th>访问时间</th>
+						<th>访问页面</th>
+					</tr>
+					<tr ng-repeat="log in vm.trackperInfo">
+						<td ng-bind="log.optDate"></td>
+						<td ng-bind="log.optContent"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

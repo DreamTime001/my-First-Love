@@ -1,0 +1,819 @@
+<div ng-controller="uploadBestMesController as vm" class="innerTop" ng-init="vm.init()">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li><a href="javascript:;" ui-sref="surveyServiceManage">尽调服务管理</a></li>
+        <li class="active">上传尽调信息</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>上传尽调信息</h2>
+            </div>
+            <div class="cutPageNav">
+                <ul>
+                    <li ng-class="{'hover':vm.currentPage == 1}" ng-click="vm.goPage('1')">资产信息</li>
+                    <li ng-class="{'hover':vm.currentPage == 2}" ng-click="vm.goPage('2')">律所提供</li>
+                    <li ng-class="{'hover':vm.currentPage == 3}" ng-click="vm.goPage('3')" ng-if="vm.srvc_tp != 2">评估信息</li>
+                </ul>
+            </div>
+            <div ng-if="vm.currentPage == 1">
+                <h2 class="mesDivTitle mt30">资产基本信息</h2>
+                <ul class="mesUl">
+                    <li>
+                        <div class="threeSide">
+                            <div class="leftKey">资产名称：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.st_nm" ng-bind="vm.astInfo.st_nm"></span>
+                                <span ng-if="!vm.astInfo.st_nm" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">资产类型：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.tp" ng-bind="vm.astInfo.tp"></span>
+                                <span ng-if="!vm.astInfo.tp" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">权利类型：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.rght_tp" ng-bind="vm.astInfo.rght_tp"></span>
+                                <span ng-if="!vm.astInfo.rght_tp" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide">
+                            <div class="leftKey">转让方式：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.trns_ty" ng-bind="vm.astInfo.trns_ty"></span>
+                                <span ng-if="!vm.astInfo.trns_ty" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">转让价格：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.trns_prc" ng-bind="vm.astInfo.trns_prc + '万元'"></span>
+                                <span ng-if="!vm.astInfo.trns_prc" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">持有人：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.holder" ng-bind="vm.astInfo.holder"></span>
+                                <span ng-if="!vm.astInfo.holder" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide">
+                            <div class="leftKey">所在地区：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.ct_nm" ng-bind="vm.astInfo.ct_nm"></span>
+                                <span ng-if="!vm.astInfo.ct_nm" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">详细地址：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astInfo.st_ads" ng-bind="vm.astInfo.st_ads"></span>
+                                <span ng-if="!vm.astInfo.st_ads" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <h2 class="mesDivTitle mt30">资产补充信息</h2>
+                <ul class="mesUl">
+                    <li>
+                        <div class="threeSide">
+                            <div class="leftKey">绿化率：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.green_rate" ng-bind="vm.astMap.green_rate"></span>
+                                <span ng-if="!vm.astMap.green_rate" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">停车场数量：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.park_count" ng-bind="vm.astMap.park_count"></span>
+                                <span ng-if="!vm.astMap.park_count" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">停车场收费：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.park_fee" ng-bind="vm.astMap.park_fee"></span>
+                                <span ng-if="!vm.astMap.park_fee" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide">
+                            <div class="leftKey">是否完税：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.isFinished_nm" ng-bind="vm.astMap.isFinished_nm"></span>
+                                <span ng-if="!vm.astMap.isFinished_nm" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">是否年检合格：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.isQualified_nm" ng-bind="vm.astMap.isQualified_nm"></span>
+                                <span ng-if="!vm.astMap.isQualified_nm" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">水电煤、物业缴纳情况：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.fee_pay" ng-bind="vm.astMap.fee_pay"></span>
+                                <span ng-if="!vm.astMap.fee_pay" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide">
+                            <div class="leftKey">公共配套面积：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.public_scale" ng-bind="vm.astMap.public_scale"></span>
+                                <span ng-if="!vm.astMap.public_scale" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide">
+                            <div class="leftKey">商业配套面积：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.trade_scale" ng-bind="vm.astMap.trade_scale"></span>
+                                <span ng-if="!vm.astMap.trade_scale" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey">入驻率：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.in_rate" ng-bind="vm.astMap.in_rate"></span>
+                                <span ng-if="!vm.astMap.in_rate" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey">周边同类住宅情况概述：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.nearby_condition" ng-bind="vm.astMap.nearby_condition"></span>
+                                <span ng-if="!vm.astMap.nearby_condition" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey">周边是否有医院：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.isHasHospital_nm" ng-bind="vm.astMap.isHasHospital_nm"></span>
+                                <span ng-if="!vm.astMap.isHasHospital_nm" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey">周边各类学校分布：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.nearby_school" ng-bind="vm.astMap.nearby_school"></span>
+                                <span ng-if="!vm.astMap.nearby_school" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey">周边公共交通站点分布：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.nearby_traffic" ng-bind="vm.astMap.nearby_traffic"></span>
+                                <span ng-if="!vm.astMap.nearby_traffic" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey">最近地铁站距离：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.nearest_metro" ng-bind="vm.astMap.nearest_metro"></span>
+                                <span ng-if="!vm.astMap.nearest_metro" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 2">
+                            <div class="leftKey">到达交通便利度：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.traffic_convenient"
+                                      ng-bind="vm.astMap.traffic_convenient"></span>
+                                <span ng-if="!vm.astMap.traffic_convenient" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 2 || vm.astInfo.tp_nm == 5">
+                            <div class="leftKey">生活便利度：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.life_convenient" ng-bind="vm.astMap.life_convenient"></span>
+                                <span ng-if="!vm.astMap.life_convenient" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3 || vm.astInfo.tp_nm == 4">
+                            <div class="leftKey">所处区位描述：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.location_des" ng-bind="vm.astMap.location_des"></span>
+                                <span ng-if="!vm.astMap.location_des" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">酒店周边配套描述：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.trade_near" ng-bind="vm.astMap.trade_near"></span>
+                                <span ng-if="!vm.astMap.trade_near" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">客房总数：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.room_count" ng-bind="vm.astMap.room_count"></span>
+                                <span ng-if="!vm.astMap.room_count" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">客房业务年收入：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.room_income" ng-bind="vm.astMap.room_income"></span>
+                                <span ng-if="!vm.astMap.room_income" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">餐饮配套情况：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.catering_des" ng-bind="vm.astMap.catering_des"></span>
+                                <span ng-if="!vm.astMap.catering_des" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">餐饮业务年收入：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.catering_income" ng-bind="vm.astMap.catering_income"></span>
+                                <span ng-if="!vm.astMap.catering_income" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">娱乐配套情况：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.entertainment_des" ng-bind="vm.astMap.entertainment_des"></span>
+                                <span ng-if="!vm.astMap.entertainment_des" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">娱乐配套年收入：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.entertainment_income"
+                                      ng-bind="vm.astMap.entertainment_income"></span>
+                                <span ng-if="!vm.astMap.entertainment_income" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">运营公司名称：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.cmp_nm" ng-bind="vm.astMap.cmp_nm"></span>
+                                <span ng-if="!vm.astMap.cmp_nm" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 3">
+                            <div class="leftKey">配套证件是否完备：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.idCardOk" ng-bind="vm.astMap.idCardOk"></span>
+                                <span ng-if="!vm.astMap.idCardOk" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 4">
+                            <div class="leftKey">所处区位描述：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.location_des" ng-bind="vm.astMap.location_des"></span>
+                                <span ng-if="!vm.astMap.location_des" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 5">
+                            <div class="leftKey">生活便利度：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.life_convenient" ng-bind="vm.astMap.life_convenient"></span>
+                                <span ng-if="!vm.astMap.life_convenient" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 5">
+                            <div class="leftKey">停车场规模：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.park_scale" ng-bind="vm.astMap.park_scale"></span>
+                                <span ng-if="!vm.astMap.park_scale" class="notVal">无</span>
+                            </div>
+                        </div>
+                        <div class="threeSide" ng-if="vm.astInfo.tp_nm == 5">
+                            <div class="leftKey">生产便利度：</div>
+                            <div class="rightVal">
+                                <span ng-if="vm.astMap.production_convenient"
+                                      ng-bind="vm.astMap.production_convenient"></span>
+                                <span ng-if="!vm.astMap.production_convenient" class="notVal">无</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="vm.currentPage == 2">
+                <ul class="mesUl">
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1">租赁合同金额：</span>
+                                <span ng-if="vm.astInfo.tp_nm != 1">平均租赁单价：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="租赁合同金额" ng-model="vm.jdLsMge.contr_mon" ng-if="vm.astInfo.tp_nm == 1">
+                                <input type="text" class="form-control w240" placeholder="平均租赁单价" ng-model="vm.jdLsMge.contr_mon" ng-if="vm.astInfo.tp_nm != 1">
+                            </div>
+                            <span class="f_l ml5" ng-if="vm.jdsts == 3 || vm.jdsts == 4">(万元)</span>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.contr_mon + '万元'"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1">周边住宅租赁市场价：</span>
+                                <span ng-if="vm.astInfo.tp_nm != 1">市场同类资产平均租赁单价：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="平均租赁单价" ng-model="vm.jdLsMge.zb_pric">
+                            </div>
+                            <span class="f_l ml5" ng-if="vm.jdsts == 3 || vm.jdsts == 4">(万元)</span>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.zb_pric + '万元'"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1">同区域资产租售比：</span>
+                                <span ng-if="vm.astInfo.tp_nm != 1"> 出租率：</span>
+                            </div>
+                            <div class="rightVal"  ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="同区域资产租售比" ng-model="vm.jdLsMge.ren_ra" ng-if="vm.astInfo.tp_nm == 1">
+                                <input type="text" class="form-control w240" placeholder="出租率" ng-model="vm.jdLsMge.ren_ra" ng-if="vm.astInfo.tp_nm != 1">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.ren_ra"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1">租赁存续周期：</span>
+                                <span ng-if="vm.astInfo.tp_nm != 1">平均租赁存续周期：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="租赁存续周期" ng-model="vm.jdLsMge.cycles" ng-if="vm.astInfo.tp_nm == 1">
+                                <input type="text" class="form-control w240" placeholder="平均租赁存续周期" ng-model="vm.jdLsMge.cycles" ng-if="vm.astInfo.tp_nm != 1">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.cycles"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>是否有合法租赁合同：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="is_contr" ng-model="vm.jdLsMge.is_contr"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="is_contr" ng-model="vm.jdLsMge.is_contr"
+                                              value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.is_contr_name"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>是否有转租：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="is_char" ng-model="vm.jdLsMge.is_char"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="is_char" ng-model="vm.jdLsMge.is_char"
+                                              value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.is_char_name"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>是否有合法租赁合同：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="is_split" ng-model="vm.jdLsMge.is_split"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="is_split" ng-model="vm.jdLsMge.is_split"
+                                              value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.is_split_name"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>诉讼期间是否申请财产保全：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="pre_tion" ng-model="vm.jdLsMge.pre_tion"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="pre_tion" ng-model="vm.jdLsMge.pre_tion"
+                                              value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.pre_tion_name"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>是否涉及法院拍卖：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="auction" ng-model="vm.jdLsMge.auction"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="auction" ng-model="vm.jdLsMge.auction"
+                                              value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.auction_name"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>产证/土地使用权证是否抵押：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="is_moge" ng-model="vm.jdLsMge.is_moge"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="is_moge" ng-model="vm.jdLsMge.is_moge"
+                                              value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.is_moge_name"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>被执行人破产情况：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="is_pc" ng-model="vm.jdLsMge.is_pc"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="is_pc" ng-model="vm.jdLsMge.is_pc" value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.is_pc_name"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>产权是否被查封：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="is_cf" ng-model="vm.jdLsMge.is_cf"
+                                                           value="1"/>是</label>
+                                <label><input type="radio" name="is_cf" ng-model="vm.jdLsMge.is_cf" value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.is_cf_name"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>房产是否存在法院查封情况：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <label class="mr10"><input type="radio" name="court_review"
+                                                           ng-model="vm.jdLsMge.court_review" value="1"/>是</label>
+                                <label><input type="radio" name="court_review" ng-model="vm.jdLsMge.court_review"
+                                              value="0"/>否</label>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.court_review_name"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>主债权诉讼情况：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="主债权诉讼情况"
+                                       ng-model="vm.jdLsMge.liti_tion">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.liti_tion"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>现阶段房产处置情况：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="现阶段房产处置情况"
+                                       ng-model="vm.jdLsMge.sit_tion">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.sit_tion"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>建筑用途：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="建筑用途"
+                                       ng-model="vm.jdLsMge.uses">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.uses"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>土地类型：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="土地类型"
+                                       ng-model="vm.jdLsMge.type">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.type"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>产权剩余年限：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="产权剩余年限"
+                                       ng-model="vm.jdLsMge.years">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.years"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>产证/土地使用权证持有人：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="产证/土地使用权证持有人"
+                                       ng-model="vm.jdLsMge.real_per">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.real_per"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>共有权利人情况：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="共有权利人情况"
+                                       ng-model="vm.jdLsMge.pub_per">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.pub_per"></div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>被执行人财产线索情况：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="被执行人财产线索情况"
+                                       ng-model="vm.jdLsMge.descs">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.descs"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>持有人概况及持有权重：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="持有人概况及持有权重"
+                                       ng-model="vm.jdLsMge.man_sum">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.man_sum"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>租赁到期日：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <input type="text" class="form-control w240" placeholder="租赁到期日" ng-model="vm.jdLsMge.dq_date" id="dq_date">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4" ng-bind="vm.jdLsMge.dq_date"></div>
+                        </div>
+                    <li>
+                        <div class="oneSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>是否有产证/土地使用权证：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                                <div class="imgOut">
+                                    <div ng-repeat="item in thumb" class="imgDiv" show-delete>
+                                        <div class="deleteDiv" ng-if="item">
+                                            <span ng-click="img_del($index,1)" class="imgDele"></span>
+                                        </div>
+                                        <label ng-if="item">
+                                            <img ng-src="{{item}}"/>
+                                        </label>
+                                    </div>
+                                    <div class="upImgIco" ng-if="addIcon">
+                                        <input type="file" id="one-input" accept="image/*" file-model="images" onchange="angular.element(this).scope().img_upload(this.files,1)" class="upImgInput"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 3 && vm.jdsts != 4">
+                                <div class="imgOut">
+                                    <div ng-repeat="item in thumb" class="imgDiv" show-delete>
+                                        <label ng-if="item">
+                                            <img ng-src="{{item}}"/>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="mt10 text-center">
+                    <input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.submit('jdLsMge')" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                    <input class="btn btn-warning" type="submit" value="完成" ng-click="vm.done('jdLsMge')" ng-if="vm.jdsts == 3 || vm.jdsts == 4">
+                </div>
+            </div>
+            <div ng-if="vm.currentPage == 3 && vm.srvc_tp != 2">
+                <ul class="mesUl">
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>该资产市场总价：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="该资产市场总价" ng-model="vm.jdPgMesgeObj.totalMoney">
+                            </div>
+                            <span class="f_l ml5" ng-if="vm.jdsts == 5 || vm.jdsts == 6">(万元)</span>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.totalMoney + '万元'"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1 || vm.astInfo.tp_nm == 4">周边住宅市场价：</span>
+                                <span ng-if="vm.astInfo.tp_nm == 2 || vm.astInfo.tp_nm == 3 || vm.astInfo.tp_nm == 5">同类资产市场价：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="周边住宅市场价" ng-model="vm.jdPgMesgeObj.zbtotalMoney" ng-if="vm.astInfo.tp_nm == 1 || vm.astInfo.tp_nm == 4">
+                                <input type="text" class="form-control w240" placeholder="同类资产市场价" ng-model="vm.jdPgMesgeObj.zbtotalMoney" ng-if="vm.astInfo.tp_nm == 2 || vm.astInfo.tp_nm == 3 || vm.astInfo.tp_nm == 5">
+                            </div>
+                            <span class="f_l ml5" ng-if="vm.jdsts == 5 || vm.jdsts == 6">(万元)</span>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.zbtotalMoney + '万元'"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>政策风险：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="政策风险" ng-model="vm.jdPgMesgeObj.policyrisk">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.policyrisk"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>市场风向：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="市场风向" ng-model="vm.jdPgMesgeObj.marketrisk">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.marketrisk"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>价格风险：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="价格风险" ng-model="vm.jdPgMesgeObj.pricerisk">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.pricerisk"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>信用风险：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="信用风险" ng-model="vm.jdPgMesgeObj.creditrisk">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.creditrisk"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>隐藏风险：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="隐藏风险" ng-model="vm.jdPgMesgeObj.hiderisk">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.hiderisk"></div>
+                        </div>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm != 3">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm != 5">同类型不动产的供应存量：</span>
+                                <span ng-if="vm.astInfo.tp_nm == 5">设备及其他附着物估价：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="同类型不动产的供应存量" ng-model="vm.jdPgMesgeObj.realtate_sm" ng-if="vm.astInfo.tp_nm != 5">
+                                <input type="text" class="form-control w240" placeholder="设备及其他附着物估价" ng-model="vm.jdPgMesgeObj.realtate_sm" ng-if="vm.astInfo.tp_nm == 5">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.realtate_sm"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1 || vm.astInfo.tp_nm == 3 || vm.astInfo.tp_nm == 5">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>同类型不动产的价格走势：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="同类型不动产的价格走势" ng-model="vm.jdPgMesgeObj.realtate_price">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.realtate_price"></div>
+                        </div>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1 || vm.astInfo.tp_nm == 5">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1">区域内标志性小区/楼盘价格走势：</span>
+                                <span ng-if="vm.astInfo.tp_nm == 5">进驻企业类型：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="区域内标志性小区/楼盘价格走势" ng-model="vm.jdPgMesgeObj.flag_price" ng-if="vm.astInfo.tp_nm == 1">
+                                <input type="text" class="form-control w240" placeholder="进驻企业类型" ng-model="vm.jdPgMesgeObj.flag_price" ng-if="vm.astInfo.tp_nm == 5">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.flag_price"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>行政规划或补贴红利：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="行政规划或红利补贴" ng-model="vm.jdPgMesgeObj.dividend">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.dividend"></div>
+                        </div>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>公共配套设施评估价值：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="公共配套设施评估价值" ng-model="vm.jdPgMesgeObj.pub_hl">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.pub_hl"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm != 3">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 5">开工/闲置状态：</span>
+                                <span ng-if="vm.astInfo.tp_nm != 5">同类型不动产的供应增量：</span>
+
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="开工/闲置状态" ng-model="vm.jdPgMesgeObj.incrent" ng-if="vm.astInfo.tp_nm == 5">
+                                <input type="text" class="form-control w240" placeholder="同类型不动产的供应增量" ng-model="vm.jdPgMesgeObj.incrent" ng-if="vm.astInfo.tp_nm != 5">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.incrent"></div>
+                        </div>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm != 3">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 5">主要设备类型及数量：</span>
+                                <span ng-if="vm.astInfo.tp_nm != 5">替代性不动产的价格走势：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="主要设备类型及数量" ng-model="vm.jdPgMesgeObj.subty" ng-if="vm.astInfo.tp_nm == 5">
+                                <input type="text" class="form-control w240" placeholder="替代性不动产的价格走势" ng-model="vm.jdPgMesgeObj.subty" ng-if="vm.astInfo.tp_nm != 5">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.subty"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>区位优势评估价值：</div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="区位优势评估价值" ng-model="vm.jdPgMesgeObj.loca_va">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.loca_va"></div>
+                        </div>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1 || vm.astInfo.tp_nm == 5">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1">楼盘开发商品牌评估价值：</span>
+                                <span ng-if="vm.astInfo.tp_nm == 5">设备折损情况：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="楼盘开发商品牌评估价值" ng-model="vm.jdPgMesgeObj.evalu" ng-if="vm.astInfo.tp_nm == 1">
+                                <input type="text" class="form-control w240" placeholder="设备折损情况" ng-model="vm.jdPgMesgeObj.evalu" ng-if="vm.astInfo.tp_nm == 5">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.evalu"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1 || vm.astInfo.tp_nm == 4">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>
+                                <span ng-if="vm.astInfo.tp_nm == 1">周边住宅近3月内成交量：</span>
+                                <span ng-if="vm.astInfo.tp_nm == 4">周边商铺交易频率：</span>
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="周边住宅近3月内成交量" ng-model="vm.jdPgMesgeObj.zbsum" ng-if="vm.astInfo.tp_nm == 1">
+                                <input type="text" class="form-control w240" placeholder="周边商铺交易频率" ng-model="vm.jdPgMesgeObj.zbsum" ng-if="vm.astInfo.tp_nm == 4">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.zbsum"></div>
+                        </div>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>该资产市场单价：
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="该资产市场单价" ng-model="vm.jdPgMesgeObj.price">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.price"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>周边住宅市场单价：
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="周边住宅市场单价" ng-model="vm.jdPgMesgeObj.zbprice">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.zbprice"></div>
+                        </div>
+                        <div class="twoSide" ng-if="vm.astInfo.tp_nm == 1">
+                            <div class="leftKey"><span class="c_ff0000 mr5">*</span>区域内房屋中介门店数量：
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                                <input type="text" class="form-control w240" placeholder="区域内房屋中介门店数量" ng-model="vm.jdPgMesgeObj.mdsum">
+                            </div>
+                            <div class="rightVal" ng-if="vm.jdsts != 5 && vm.jdsts != 6" ng-bind="vm.jdPgMesgeObj.mdsum"></div>
+                        </div>
+
+                    </li>
+                </ul>
+                <div class="mt10 text-center">
+                    <input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.submit('jdPgMesge')" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                    <input class="btn btn-warning" type="submit" value="完成" ng-click="vm.done('jdPgMesge')" ng-if="vm.jdsts == 5 || vm.jdsts == 6">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showAlertPop">
+        <div class="alertEdit">
+            <div class="title">
+                <h2>提示</h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <p style="text-align: center;font-size:16px;margin-top:10px">您确定删除吗？</p>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="delete()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+</div>

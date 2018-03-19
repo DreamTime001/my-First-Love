@@ -1,0 +1,182 @@
+<div  ng-controller="blacklistController as vm" class="innerTop">
+	<ol class="breadcrumb">
+		<li>
+			<a href="javascript:;" ui-sref="home" >首页</a>
+		</li>
+		<li class="active">黑名单管理</li>
+	</ol>
+	<div class="pLR30">
+		<div class="rightDiv">
+			<div class="rightContTitle">
+				<h2>黑名单管理</h2>
+			</div>
+			<div class="queryDiv">
+				<div class="queryDivIn">
+					<form class="form-horizontal">
+						<div class="f_l mr15 mb10">
+							<select class="form-control w150" ng-model="vm.query.type"
+									ng-options="o.type as o.name for o in vm.typeList">
+								<option value="">会员类型</option>
+							</select>
+						</div>
+						<div>
+							<div class="f_l mr15 mb10">
+								<input type="text" class="form-control" placeholder="请输入关键字（名称）"
+									   ng-model="vm.query.orgNo">
+							</div>
+							<div class="f_l mb10">
+								<input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+								<input class="btn btn-warning" type="submit" value="重置" ng-click="vm.resetQuery()">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="buttonList" ng-if="vm.list.length > 0">
+				<a href="javascript:;" class="view" ng-click="vm.singleClick()">查看</a>
+				<a href="javascript:;" class="remBlank" ng-click="vm.removeClick()">移除黑名单</a>
+				<a href="javascript:;" class="track" ng-click="vm.logList()">追踪管理</a>
+			</div>
+			<div class="noDataDiv" ng-if="!vm.list.length">
+				<div class="noData">
+					<div class="noDataBg"></div>
+					<p>暂时没有数据～</p>
+				</div>
+			</div>
+			<table class="table tableInfo" ng-if="vm.list.length > 0">
+				<tr>
+					<th></th>
+					<th>
+						<span ng-if="vm.tableTile == 0">姓名</span>
+						<span ng-if="vm.tableTile == 1">机构名称</span>
+					</th>
+					<th>
+						<span ng-if="vm.tableTile == 0">身份证</span>
+						<span ng-if="vm.tableTile == 1">组织机构代码证号</span>
+					</th>
+					<th>所在地</th>
+					<th>期限</th>
+					<th>黑名单日期</th>
+					<th>追踪管理</th>
+				</tr>
+				<tr ng-repeat="member in vm.list" ng-click="vm.selectThis(member)" ng-class="{'hover':member.checked}">
+					<td><i ng-class="{'checked':member.checked}"></i></td>
+					<td ng-bind="member.cmp_nm"></td>
+					<td ng-bind="member.lcns_no"></td>
+					<td ng-bind="member.ct"></td>
+					<td ng-bind="member.timeLimit"></td>
+					<td ng-bind="member.bgnDt + '~' + member.endDt"></td>
+					<td ng-bind="member.manger"></td>
+				</tr>
+			</table>
+			<div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+		</div>
+	</div>
+	<!--查看弹窗层-->
+	<div class="mask blackMask mask_visible" ng-if="vm.showPersonView">
+		<div class="memberPopView">
+			<div class="title">
+				<h2 ng-bind="vm.memberTitle"></h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<ul class="inDiv">
+				<li>
+					<div class="leftKey">
+						<span ng-if="vm.tableTile == 0">姓名:</span>
+						<span ng-if="vm.tableTile == 1">机构名称:</span>
+					</div>
+					<div class="rightVal" ng-bind="vm.perInfo.orgName1"></div>
+				</li>
+				<li>
+					<div class="leftKey">所在地:</div>
+					<div class="rightVal" ng-bind="vm.perInfo.pcity"></div>
+				</li>
+				<li>
+					<div class="leftKey">
+						<span ng-if="vm.tableTile == 0">身份证:</span>
+						<span ng-if="vm.tableTile == 1">组织机构代码证号:</span>
+					</div>
+					<div class="rightVal" ng-bind="vm.perInfo.zhizhaoNo"></div>
+				</li>
+				<li>
+					<div class="leftKey">黑名单期限:</div>
+					<div class="rightVal">
+						<span class="deadline"ng-bind="vm.perInfo.begin"></span>
+						<span class="deadline deadline-g">-</span>
+						<span class="deadline" ng-bind="vm.perInfo.end" style="padding-left: 6px;"></span>
+					</div>
+				</li>
+				<li>
+					<div class="leftKey">剩余天数:</div>
+					<div class="rightVal" ng-bind="vm.perInfo.qixian"></div>
+				</li>
+				<li>
+					<div class="leftKey">原因:</div>
+					<div class="rightVal lh30" ng-bind="vm.perInfo.rvwInf"></div>
+				</li>
+				<!--<li>
+					<div class="leftKey">其它:</div>
+					<div class="rightVal lh30" ng-bind="vm.perInfo.rvwInf"></div>
+				</li>-->
+			</ul>
+		</div>
+	</div>
+	<div class="mask blackMask mask_visible" ng-if="vm.showOrgEdit">
+		<div class="smallEdit" >
+			<div class="title">
+				<h2 ng-bind="vm.memberTitle"></h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+				<p ng-bind="vm.erroeMessage"></p>
+			</div>
+			<ul class="inDiv">
+				<li>
+					<div class="leftKey">原因:</div>
+					<div class="rightVal">
+                        <textarea type="text" class="form-control w300" style="height: 85px;"placeholder="请输入移除黑名单原因"
+								  ng-model="vm.blackObj.cause" id="cause"></textarea>
+					</div>
+				</li>
+			</ul>
+			<div style="text-align: center;margin-top:10px">
+				<input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.updateOrgInfo()">
+				<input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+			</div>
+		</div>
+	</div>
+	<div class="mask blackMask mask_visible" ng-if="vm.showListPop">
+		<div class="listPop">
+			<div class="title">
+				<h2 ng-bind="vm.titleView"></h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<ul class="inDiv" style="height: 100px;margin-top: 20px;">
+				<li>
+					<div class="leftKey">机构名称:</div>
+					<div class="rightVal" ng-bind="vm.listObj.cmp_nm"></div>
+				</li>
+				<li style="border-bottom: 1px dashed #dcdcdc">
+					<div class="leftKey">所在城市:</div>
+					<div class="rightVal" ng-bind="vm.listObj.ct"></div>
+				</li>
+			</ul>
+			<div class="scroll">
+			<table class="table tableInfo">
+				<tr>
+					<th>开始时间</th>
+					<th>结束时间</th>
+					<th>跟踪时间</th>
+					<th>跟踪内容</th>
+				</tr>
+				<tr ng-repeat="log in vm.popLogList">
+					<td ng-bind="log.beginDate"></td>
+					<td ng-bind="log.endDate"></td>
+					<td ng-bind="log.trckTime"></td>
+					<td ng-bind="log.trckContent"></td>
+				</tr>
+			</table>
+			</div>
+		</div>
+	</div>
+</div>

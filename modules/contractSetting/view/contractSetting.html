@@ -1,0 +1,304 @@
+<div ng-controller="contractSettingController as vm" class="innerTop">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">合同模板设置</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>合同模板设置</h2>
+            </div>
+            <div class="queryDiv">
+                <div class="queryDivIn">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.assestType"
+                                        ng-options="o.assestType as o.name for o in vm.assestTypeList">
+                                    <option value="">资产分类</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.cntrctType"
+                                        ng-options="o.cntrctType as o.name for o in vm.cntrctTypeList">
+                                    <option value="">合同类型</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.dealType"
+                                        ng-options="o.dealType as o.name for o in vm.dealTypeList">
+                                    <option value="">权利类型</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.cntrctStatus"
+                                        ng-options="o.cntrctStatus as o.name for o in vm.cntrctStatusList">
+                                    <option value="">合同模板状态</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control w260" placeholder="请输入关键字（合同模板名称或编号）"
+                                       ng-model="vm.query.nameAndSid">
+                            </div>
+                            <div class="f_l mb10">
+                                <input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+                                <input class="btn btn-info" type="submit" value="新增合同模板" ng-click="vm.showAddPop()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="buttonList" ng-if="vm.list.length > 0">
+                <a href="javascript:;" class="view" ng-click="vm.showViewListPop()">查看</a>
+                <a href="javascript:;" class="edit" ng-click="vm.showEditPop()">编辑</a>
+                <a href="javascript:;" class="alt delete" ng-click="vm.showAlertPop()">删除</a>
+                <a href="javascript:;" class="view" ng-click="vm.showExaminePop()">审核</a>
+            </div>
+            <div class="noDataDiv" ng-if="!vm.list.length">
+                <div class="noData">
+                    <div class="noDataBg"></div>
+                    <p>暂时没有数据～</p>
+                </div>
+            </div>
+            <table class="table tableInfo" ng-if="vm.list.length > 0">
+                <tr>
+                    <th></th>
+                    <th>合同模板名称</th>
+                    <th>合同类型</th>
+                    <th>资产类型</th>
+                    <th>权利类型</th>
+                    <th>合同模板状态</th>
+                    <th>创建时间</th>
+                </tr>
+                <tr ng-repeat="obj in vm.list" ng-click="vm.selectThis(obj)" ng-class="{'hover':obj.checked}">
+                    <td><i ng-class="{'checked':obj.checked}"></i></td>
+                    <td ng-bind="obj.nm"></td>
+                    <td ng-bind="obj.contrctTp_name"></td>
+                    <td ng-bind="obj.stTp_name"></td>
+                    <td ng-bind="obj.trdTp_name"></td>
+                    <td ng-bind="obj.sts"></td>
+                    <td ng-bind="obj.createTime"></td>
+                </tr>
+            </table>
+            <div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+        </div>
+    </div>
+    <!--查看框-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showViewList">
+        <div class="listPop">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv" style="height: 50px;margin-top: 20px;">
+                <li>
+                    <div class="leftKey">合同模板名称:</div>
+                    <div class="rightVal" ng-bind="vm.nm"></div>
+                </li>
+            </ul>
+            <div class="scroll">
+                <table class="table tableInfo">
+                    <tr>
+                        <th>服务时间</th>
+                        <th>操作人</th>
+                        <th>追踪内容</th>
+                        <th>上传文件名</th>
+                    </tr>
+                    <tr ng-repeat="log in vm.viewList">
+                        <td ng-bind="log.updTm"></td>
+                        <td ng-bind="log.updUsrCd"></td>
+                        <td ng-bind="log.nm"></td>
+                        <td ng-bind="log.tmpltNm"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--编辑框-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showEdit">
+        <div class="memberPopEdit">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <div class="leftKey">合同类型:</div>
+                    <div class="rightVal" ng-bind="vm.contrctTp_name"></div>
+                </li>
+                <li>
+                    <div class="leftKey">资产类型:</div>
+                    <div class="rightVal" ng-bind="vm.stTp_name"></div>
+                </li>
+                <li>
+                    <div class="leftKey">交易类型:</div>
+                    <div class="rightVal" ng-bind="vm.trdTp_name"></div>
+                </li>
+                <li>
+                    <div class="leftKey">合同名称:</div>
+                    <div class="rightVal" ng-bind="vm.nm"></div>
+                </li>
+                <li style="height:auto;overflow: hidden;width:100%;padding-top:10px">
+                    <div class="leftKey">上传word模板:</div>
+                    <div class="rightVal">
+                        <div class="uploadFiles f_l mr10"><span class="wj_text" ng-bind="vm.inputTextDosEdit"></span>
+                            <input type="file" class="uploadFilesNm" ng-file-select="vm.onFileSelect($files,'dos','edit')"
+                                   multiple
+                                   accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        </div>
+                        <a href="javascript:;" class="downLoadIco f_l" ng-click="vm.download('doc')"></a>
+                    </div>
+                </li>
+                <li style="height:auto;overflow: hidden;width:100%;padding-top:10px">
+                    <div class="leftKey">上传pdf模板:</div>
+                    <div class="rightVal">
+                        <div class="uploadFiles f_l mr10"><span class="wj_text" ng-bind="vm.inputTextPdfEdit"></span>
+                            <input type="file" class="uploadFilesNm" ng-file-select="vm.onFileSelect($files,'pdf','edit')"
+                                   multiple accept="application/pdf">
+                        </div>
+                        <a href="javascript:;" class="downLoadIco f_l" ng-click="vm.download('pdf')"></a>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toEdit()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--确认框-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showAlert">
+        <div class="alertEdit">
+            <div class="title">
+                <h2>提示</h2>
+                <i ng-click="vm.closePopPic()"></i>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <p style="text-align: center;font-size:16px;margin-top:10px">您确定删除吗？</p>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toDelete()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--审核框-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showExamine">
+        <div class="memberPopView gesh" style="height: 320px;">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv" style="height: 200px;">
+                <li style="border:0;margin-bottom:10px">
+                    <div class="leftKey">审核时间:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="审核时间"
+                               ng-model="vm.examineInfo.crtTm" readonly="" id="crtTm">
+                    </div>
+                </li>
+                <li style="border:0;margin-bottom:10px">
+                    <div class="leftKey">审核结果:</div>
+                    <div class="rightVal">
+                        <select class="form-control w150" ng-model="vm.examineInfo.rvwrslt"
+                                ng-options="o.rvwrslt as o.name for o in  [{rvwrslt:1,name:'通过'},{rvwrslt:0,name:'拒绝'}]">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">审核意见:</div>
+                    <div class="rightVal">
+                        <textarea class="form-control w300 h80" placeholder="请审核意见"
+                                  ng-model="vm.examineInfo.rvwInf" id="rvwInf"></textarea>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.toExamine()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--新增框-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showAdd">
+        <div class="memberPopEdit">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <div class="leftKey">合同类型:</div>
+                    <div class="rightVal">
+                        <select class="form-control w300" ng-model="vm.examinAddObj.cntrctType"
+                                ng-options="o.cntrctType as o.name for o in vm.cntrctTypeList" id="cntrctType">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">资产类型:</div>
+                    <div class="rightVal">
+                        <select class="form-control w300" ng-model="vm.examinAddObj.assestType"
+                                ng-options="o.assestType as o.name for o in vm.assestTypeList" id="assestType">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">交易类型:</div>
+                    <div class="rightVal">
+                        <select class="form-control w300" ng-model="vm.examinAddObj.dealType"
+                                ng-options="o.dealType as o.name for o in vm.dealTypeList" id="dealType">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">合同名称:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="合同名称"
+                               ng-model="vm.examinAddObj.nm" id="nm">
+                    </div>
+                </li>
+                <li style="height:auto;overflow: hidden;width:100%;padding-top:10px">
+                    <div class="leftKey">上传word模板:</div>
+                    <div class="rightVal">
+                        <div class="uploadFiles"><span class="wj_text" ng-bind="vm.inputTextDosAdd"></span>
+                            <input type="file" class="uploadFilesNm" ng-file-select="vm.onFileSelect($files,'dos','add')"
+                                   multiple
+                                   accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        </div>
+                    </div>
+                </li>
+                <li style="height:auto;overflow: hidden;width:100%;padding-top:10px">
+                    <div class="leftKey">上传pdf模板:</div>
+                    <div class="rightVal">
+                        <div class="uploadFiles"><span class="wj_text" ng-bind="vm.inputTextPdfAdd"></span>
+                            <input type="file" class="uploadFilesNm" ng-file-select="vm.onFileSelect($files,'pdf','add')"
+                                   multiple accept="application/pdf">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toAdd()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+</div>

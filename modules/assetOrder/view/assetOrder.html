@@ -1,0 +1,389 @@
+<div ng-controller="assetOrderController as vm" class="innerTop">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">资产交易订单</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>资产交易订单</h2>
+            </div>
+            <div class="queryDiv">
+                <div class="queryDivIn">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.tp"
+                                        ng-options="o.tp as o.name for o in vm.tpList">
+                                    <option value="">资产类型</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.trns_ty"
+                                        ng-options="o.trns_ty as o.name for o in vm.trns_tyList">
+                                    <option value="">转让方式</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.sts"
+                                        ng-options="o.sts as o.name for o in vm.stsList">
+                                    <option value="">订单状态</option>
+                                </select>
+                            </div>
+                            <div class="f_l mb10">
+                                <input type="text" class="form-control w160 mr5" id="beginDate" placeholder="请选择创建日期"
+                                       ng-model="vm.query.beginDate" readonly>
+                            </div>
+                            <div class="f_l mr5" style="line-height: 30px">-</div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control w160 mr5" id="endDate" placeholder="请选择结束日期"
+                                       ng-model="vm.query.endDate" readonly>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control w240" placeholder="请输入关键字(项目名称,机构名称)"
+                                       ng-model="vm.query.st_nm">
+                            </div>
+                            <div class="f_l mb10">
+                                <input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+                                <input class="btn btn-warning" type="submit" value="重置" ng-click="vm.resetQuery()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="buttonList" ng-if="vm.list.length > 0">
+                <a href="javascript:;" class="view" ng-click="vm.viewTransInfo()">查看交易信息</a>
+                <a href="javascript:;" class="cancelOrd" ng-click="vm.cancelOrd()">取消订单</a>
+                <a href="javascript:;" class="view" ng-click="vm.assetView()">资产信息查看</a>
+                <a href="javascript:;" class="view" ng-click="vm.view('org_cd_m')">出让方信息查看</a>
+                <a href="javascript:;" class="view" ng-click="vm.view('org_cd')">受让方信息查看</a>
+            </div>
+            <div class="noDataDiv" ng-if="!vm.list.length">
+                <div class="noData">
+                    <div class="noDataBg"></div>
+                    <p>暂时没有数据～</p>
+                </div>
+            </div>
+            <table class="table tableInfo" ng-if="vm.list.length > 0">
+                <tr>
+                    <th></th>
+                    <th class="tabCell" style="width:12%">项目名称</th>
+                    <th class="tabCell" style="width:10%">出让方名称</th>
+                    <th class="tabCell" style="width:10%">受让方名称</th>
+                    <!--<th>购买份数</th>-->
+                    <th>购买总价(万元)</th>
+                    <th class="text-center">订单状态</th>
+                    <th>交易类型</th>
+                    <th>创建时间</th>
+                    <th>是否请求服务</th>
+                </tr>
+                <tr ng-repeat="assset in vm.list" ng-click="vm.selectThis(assset)" ng-class="{'hover':assset.checked}">
+                    <td><i ng-class="{'checked':assset.checked}"></i></td>
+                    <td>
+                        <div ng-bind="assset.proNm" class="tabCell" style="width:90%"></div>
+                    </td>
+                    <td>
+                        <div ng-bind="assset.crf" class="tabCell" style="width:90%"></div>
+                    </td>
+                    <td>
+                        <div ng-bind="assset.srf" class="tabCell" style="width:90%"></div>
+                    </td>
+                    <!--<td ng-bind="assset.gouMai"></td>-->
+                    <td ng-bind="assset.trd_prc"></td>
+                    <td class="text-center">
+                        <span ng-bind="assset.sts_nm"
+                              ng-class="{'pass':assset.sts == 0,'unPass':assset.sts != 0}"></span>
+                    </td>
+                    <td ng-bind="assset.type"></td>
+                    <td ng-bind="assset.crt_tm | limitTo : 10"></td>
+                    <td ng-bind="assset.isfor"></td>
+                </tr>
+            </table>
+            <div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+            <div class="mask blackMask mask_visible" ng-if="vm.showAssetView">
+                <div class="memberPopView">
+                    <div class="title">
+                        <h2 ng-bind="vm.titleView"></h2>
+                        <i ng-click="vm.closePop()"></i>
+                    </div>
+                    <ul class="inDiv">
+                        <li>
+                            <div class="leftKey">资产名称:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.jst_nm"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">发布者名称:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.pcmp_nm"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">身份类型:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.id_flag"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">发布者身份:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.crt_p_id"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">所在地区:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.provnc + vm.assetData.ct"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">详细地址:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.address"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">转让价格:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.jtrns_prc"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">资产类型:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.jtp"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">转让方式:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.jtrns_nm"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">标的面积:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.st_cge"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">房产时间:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.hos_dt"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">可否议价:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.st_tkprc"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">资产来源:</div>
+                            <div class="rightVal" ng-bind="vm.assetData.st_from"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">资产估价:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.jss_prc"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">税费承担:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.tax_fee"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">产证编号:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.hos_id"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">层高/总高:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.flr_high"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">容积率:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.vlm_rt"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">能否改建:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.st_rebuild"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">租赁情况:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.hos_rent"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">装修情况:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.hos_ftmnt"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">产权年限:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.property_life"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">资产简介:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.st_dvntg"></div>
+                        </li>
+                        <li ng-if="vm.assetData.assetAttach">
+                            <div class="leftKey">资产附件:</div>
+                            <div class="rightVal lh30" ng-bind="vm.assetData.assetAttach"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mask blackMask mask_visible" ng-if="vm.showPersonView">
+                <div class="memberPopView">
+                    <div class="title">
+                        <h2 ng-bind="vm.titleView"></h2>
+                        <i ng-click="vm.closePop()"></i>
+                    </div>
+                    <ul class="inDiv">
+                        <li>
+                            <div class="leftKey">真实姓名:</div>
+                            <div class="rightVal" ng-bind="vm.perInfo.realname"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">身份证号:</div>
+                            <div class="rightVal" ng-bind="vm.perInfo.idcard"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">用户邮箱:</div>
+                            <div class="rightVal" ng-bind="vm.perInfo.permail"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">所在城市:</div>
+                            <div class="rightVal" ng-bind="vm.perInfo.sciy"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">详细地址:</div>
+                            <div class="rightVal" ng-bind="vm.perInfo.perare"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">个人简介:</div>
+                            <div class="rightVal lh30" ng-bind="vm.perInfo.perde"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mask blackMask mask_visible" ng-if="vm.showOrgView">
+                <div class="memberPopView">
+                    <div class="title">
+                        <h2 ng-bind="vm.titleView"></h2>
+                        <i ng-click="vm.closePop()"></i>
+                    </div>
+                    <ul class="inDiv">
+                        <li>
+                            <div class="leftKey">公司名称:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.cmpName"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">组织机构代码证号:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.zhiNo"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">成立日期:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.liDate"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">注册资本:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.faPerson"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">所在省:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.province"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">所在市:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.city"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">法人代表:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.fa"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">联系电话:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.tel"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">董事长:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.manger"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">联系电话:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.chair_tel"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">主要股东:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.gudong"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">法人代表身份证号:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.cmpidcard"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">是否上市:</div>
+                            <div class="rightVal" ng-bind="vm.orgInfo.staus"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">公司简介:</div>
+                            <div class="rightVal lh30" ng-bind="vm.orgInfo.dsc"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mask blackMask mask_visible" ng-if="vm.showTransView">
+                <div class="middleView">
+                    <div class="title">
+                        <h2 ng-bind="vm.titleView"></h2>
+                        <i ng-click="vm.closePop()"></i>
+                    </div>
+                    <ul class="inDiv">
+                        <li>
+                            <div class="leftKey">总价:</div>
+                            <div class="rightVal" ng-bind="vm.transData.totalPrice"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">状态:</div>
+                            <div class="rightVal" ng-bind="vm.transData.sts"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">平台服务费:</div>
+                            <div class="rightVal" ng-bind="vm.transData.srvc_chrg"></div>
+                        </li>
+                        <li>
+                            <div class="leftKey">创建时间:</div>
+                            <div class="rightVal" ng-bind="vm.transData.crt_tm"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mask blackMask mask_visible" ng-if="vm.showCancelOrdPop">
+                <div class="middleEdit">
+                    <div class="title">
+                        <h2 ng-bind="vm.titleView"></h2>
+                        <i ng-click="vm.closePop()"></i>
+                    </div>
+                    <div class="errorMessageDiv">
+                        <p ng-bind="vm.erroeMessage" ng-if="vm.showErrorMessage"></p>
+                    </div>
+                    <ul class="inDiv" style="margin-top:0">
+                        <li>
+                            <div class="leftKey">责任方:</div>
+                            <div class="rightVal">
+                                <label><input type="radio" name="rcmnd" ng-model="vm.cancelordObj.rslt"
+                                              value="0"/>转让方</label>
+                                <label><input type="radio" name="rcmnd" ng-model="vm.cancelordObj.rslt"
+                                              value="1"/>受让方</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="leftKey">取消原因:</div>
+                            <div class="rightVal">
+                                <textarea type="text" class="form-control w300 h110" placeholder="请输入取消原因"
+                                          ng-model="vm.cancelordObj.rsltInf" id="rsltInf"></textarea>
+                            </div>
+                        </li>
+                    </ul>
+                    <div style="text-align: center;margin-top:10px">
+                        <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toAlertPop()">
+                        <input class="btn btn-warning" type="submit" value="返回" ng-click="vm.closePop()">
+                    </div>
+                </div>
+            </div>
+            <div class="mask mask_visible" ng-if="vm.showAlertPop">
+                <div class="alertEdit">
+                    <div class="title">
+                        <h2>提示</h2>
+                        <i ng-click="vm.closeAlert()"></i>
+                    </div>
+                    <ul class="inDiv">
+                        <li>
+                            <p style="text-align: center;font-size:16px;margin-top:10px">是否确认?</p>
+                        </li>
+                    </ul>
+                    <div style="text-align: center;margin-top:10px">
+                        <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toCancelOrd()">
+                        <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closeAlert()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

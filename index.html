@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>新平台</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min_v3.3.4.css">
+    <link rel="stylesheet" href="static/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/jquery/jquery-1.10.2.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="static/js/jquery/jquery.slimscroll.min.js"></script>
+    <script src="static/js/menu.js"></script>
+    <script src="static/js/angular/angular.min.js"></script>
+    <script src="static/js/angular/angular-file-upload.min.js"></script>
+    <script src="static/js/angular/angular-ui-router.js"></script>
+    <script src="static/js/angular/angular-cookies.min.js"></script>
+    <script src="static/js/angular/ocLazyLoad.min.js"></script>
+    <!--<script type="text/javascript" src="http://ueditor.baidu.com/ueditor/ueditor.config.js"></script>-->
+    <!--<script type="text/javascript" src="http://ueditor.baidu.com/ueditor/ueditor.all.js"></script>-->
+    <script type="text/javascript" src="static/js/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="static/js/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" src="core/directives/ueditorDirective.js"></script>
+    <!--<script type="text/javascript" src="static/js/angular-ueditor.js"></script>-->
+    <script type="text/javascript" src="static/js/common.js"></script>
+
+    <!--<script src="core/configs/developConfig.js"></script>-->
+    <script src="core/configs/testConfig.js"></script>
+    <script src="core/services/service.js"></script>
+    <script src="core/services/util.js"></script>
+    <script src="core/services/layer/layer.js"></script>
+    <script src="core/services/layer.js"></script>
+    <script src="core/directives/directive.js"></script>
+    <script src="static/js/FileSaver.js"></script>
+
+    <script src="static/js/ag-ui-bs/angular-locale_zh-cn.js"></script>
+    <script src="static/js/angular/angular-animate.min.js"></script>
+    <script src="static/js/angular/angular-touch.min.js"></script>
+    <script src="static/js/ag-ui-bs/ui-bootstrap-tpls.js"></script>
+    <script src="static/js/md5.js"></script>
+    <script src="static/js/initDate.js"></script>
+
+    <script src="app.js"></script>
+    <!--总路由-->
+    <script src="core/routes/router.js"></script>
+    <script src="modules/index/controller/indexController.js"></script>
+    <!--首页-->
+    <script src="modules/home/route/route.js"></script>
+    <script src="modules/home/controller/homeController.js"></script>
+    <!--会员一览-->
+    <script src="modules/membersList/route/route.js"></script>
+    <script src="modules/membersList/controller/membersListController.js"></script>
+    <!--未完善会员一览-->
+    <script src="modules/unMembersList/route/route.js"></script>
+    <script src="modules/unMembersList/controller/unMembersListController.js"></script>
+    <!--会员审核-->
+    <script src="modules/membershipAudit/route/route.js"></script>
+    <script src="modules/membershipAudit/controller/membershipAuditController.js"></script>
+    <!--黑名单管理-->
+    <script src="modules/blackList/route/route.js"></script>
+    <script src="modules/blackList/controller/blacklistController.js"></script>
+    <!--资产登记-->
+    <script src="modules/assetRegistration/route/route.js"></script>
+    <script src="modules/assetRegistration/controller/assetRegistrationController.js"></script>
+    <!--要约登记-->
+    <script src="modules/registrationOffer/route/route.js"></script>
+    <script src="modules/registrationOffer/controller/registrationOfferController.js"></script>
+    <!--资产审核-->
+    <script src="modules/assetAudit/route/route.js"></script>
+    <script src="modules/assetAudit/controller/assetAuditController.js"></script>
+    <!--资产交易订单-->
+    <script src="modules/assetOrder/route/route.js"></script>
+    <script src="modules/assetOrder/controller/assetOrderController.js"></script>
+    <!--资产交易订单-->
+    <script src="modules/contractOrder/route/route.js"></script>
+    <script src="modules/contractOrder/controller/contractOrderController.js"></script>
+    <!--咨询管理-->
+    <script src="modules/consultingManage/route/route.js"></script>
+    <script src="modules/consultingManage/controller/consultingManageController.js"></script>
+    <!--服务管理-->
+    <script src="modules/serviceManage/route/route.js"></script>
+    <script src="modules/serviceManage/controller/serviceManageController.js"></script>
+    <!--会员追踪管理-->
+    <script src="modules/trackingManage/route/route.js"></script>
+    <script src="modules/trackingManage/controller/trackingManageController.js"></script>
+    <!--合同管理-->
+    <script src="modules/contractManage/route/route.js"></script>
+    <script src="modules/contractManage/controller/contractManageController.js"></script>
+    <!--合同模板设置-->
+    <script src="modules/contractSetting/route/route.js"></script>
+    <script src="modules/contractSetting/controller/contractSettingController.js"></script>
+    <!--转账指令确认-->
+    <script src="modules/transferOrderConf/route/route.js"></script>
+    <script src="modules/transferOrderConf/controller/transferOrderConfController.js"></script>
+    <!--Banner管理-->
+    <script src="modules/bannerManage/route/route.js"></script>
+    <script src="modules/bannerManage/controller/bannerManageController.js"></script>
+    <!--关于我们-->
+    <script src="modules/aboutUs/route/route.js"></script>
+    <script src="modules/aboutUs/controller/aboutUsController.js"></script>
+    <!--新闻公告-->
+    <script src="modules/newsBulletin/route/route.js"></script>
+    <script src="modules/newsBulletin/controller/newsBulletinController.js"></script>
+    <!--用户组管理-->
+    <script src="modules/userGroupManage/route/route.js"></script>
+    <script src="modules/userGroupManage/controller/userGroupManageController.js"></script>
+    <!--用户管理-->
+    <script src="modules/userManage/route/route.js"></script>
+    <script src="modules/userManage/controller/userManageController.js"></script>
+    <!--数据字典维护-->
+    <script src="modules/dataDictionary/route/route.js"></script>
+    <script src="modules/dataDictionary/controller/dataDictionaryController.js"></script>
+    <!--知识库管理-->
+    <script src="modules/knowledgeBaseManage/route/route.js"></script>
+    <script src="modules/knowledgeBaseManage/controller/knowledgeBaseManageController.js"></script>
+    <!--服务机构管理-->
+    <script src="modules/serviceOrgManage/route/route.js"></script>
+    <script src="modules/serviceOrgManage/controller/serviceOrgManageController.js"></script>
+    <!--尽调服务管理-->
+    <script src="modules/surveyServiceManage/route/route.js"></script>
+    <script src="modules/surveyServiceManage/controller/surveyServiceManageController.js"></script>
+    <!--分成查询-->
+    <script src="modules/partitionQuery/route/route.js"></script>
+    <script src="modules/partitionQuery/controller/partitionQueryController.js"></script>
+    <!--尽调模板上传-->
+    <script src="modules/surveyTempUp/route/route.js"></script>
+    <script src="modules/surveyTempUp/controller/surveyTempUpController.js"></script>
+    <!--上传尽调信息-->
+    <script src="modules/uploadBestMes/route/route.js"></script>
+    <script src="modules/uploadBestMes/controller/uploadBestMesController.js"></script>
+    <!--404-->
+    <script src="modules/notFound/route/route.js"></script>
+    <script src="modules/notFound/controller/notFoundController.js"></script>
+</head>
+
+<body ng-app="app">
+<div ng-controller="indexController as vm" ng-init="vm.init()">
+    <div id="top" class="clearfix">
+        <div class="applogo"></div>
+        <div class="topRight">
+            <h2>非标资产交易--后台管理系统</h2>
+            <ul class="userAddInfo">
+                <li ng-bind="'您好: '+ vm.usrInfor.usrName" class="icon user"></li>
+                <li ng-bind="'上次登陆时间：' + vm.usrInfor.lastLogin"></li>
+                <li class="icon layout" ng-click="vm.logout()">退出</li>
+            </ul>
+        </div>
+    </div>
+    <aside>
+        <div id="sider">
+            <div class="subMenu" ng-repeat="nav in vm.menuList">
+                <div class="navTitle">
+                    <div class="textRight">
+                        <h3 ng-bind="nav.title"></h3>
+                    </div>
+                    <i class="arrow"></i>
+                </div>
+                <ul>
+                    <li ui-sref="{{listObj.url}}" ng-repeat="listObj in nav.list" ui-sref-active="hover">
+                        <div class="iconLeft">
+                            <i ng-class="listObj.class"></i>
+                        </div>
+                        <div class="textRight">
+                            <a ng-bind="listObj.name"></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+</div>
+<div class="wrap">
+    <div ui-view></div>
+</div>
+</body>
+
+</html>

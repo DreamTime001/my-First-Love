@@ -1,0 +1,146 @@
+<div ng-controller="userGroupManageController as vm" class="innerTop">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">用户组管理</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>用户组管理</h2>
+            </div>
+            <div class="queryDiv">
+                <div class="queryDivIn">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control" placeholder="用户组名称"
+                                       ng-model="vm.query.grpNm">
+                            </div>
+                            <div class="f_l mb10">
+                                <input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="buttonList" ng-if="vm.list.length > 0">
+                <a href="javascript:;" class="add" ng-click="vm.showDataMesPop('add')">新增</a>
+                <a href="javascript:;" class="edit" ng-click="vm.showDataMesPop('edit')">编辑</a>
+                <a href="javascript:;" class="permissionSet" ng-click="vm.showPermissionSetPop()">权限设定</a>
+                <a href="javascript:;" class="alt delete" ng-click="vm.showAlertPop()">删除</a>
+            </div>
+            <div class="noDataDiv" ng-if="!vm.list.length">
+                <div class="noData">
+                    <div class="noDataBg"></div>
+                    <p>暂时没有数据～</p>
+                </div>
+            </div>
+            <table class="table tableInfo" ng-if="vm.list.length > 0">
+                <tr>
+                    <th></th>
+                    <th>用户组编号</th>
+                    <th>用户组名称</th>
+                    <th>描述</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                </tr>
+                <tr ng-repeat="obj in vm.list" ng-click="vm.selectThis(obj)" ng-class="{'hover':obj.checked}">
+                    <td><i ng-class="{'checked':obj.checked}"></i></td>
+                    <td ng-bind="obj.grpCd"></td>
+                    <td ng-bind="obj.grpNm"></td>
+                    <td ng-bind="obj.grpDsc"></td>
+                    <td ng-bind="obj.crtTm"></td>
+                    <td ng-bind="obj.updTm"></td>
+                </tr>
+            </table>
+            <div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+        </div>
+    </div>
+
+    <div class="mask blackMask mask_visible" ng-if="vm.showPermissionSet">
+        <div class="roleTreeEdit">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv" style="padding-bottom:0">
+                <li>
+                    <div class="leftKey">用户组编号:</div>
+                    <div class="rightVal" ng-bind="vm.grpCd"></div>
+                </li>
+                <li style="margin-bottom:0">
+                    <div class="leftKey">用户组名称:</div>
+                    <div class="rightVal" ng-bind="vm.grpNm"></div>
+                </li>
+            </ul>
+            <div style="height:300px;overflow: auto">
+                <div class="permissionSetLay" ng-repeat="data in vm.roleTree">
+                    <h2 ng-class="{'active':data.state == 'open'}" ng-bind="data.text" ng-click="vm.changeState(data)"></h2>
+                    <div class="permissionSetLayIn">
+                        <p ng-class="{'checked':data.checked}" ng-click="vm.allChk(data)">全部</p>
+                        <ul ng-repeat="obj in data.children">
+                            <li><span ng-class="{'checked':obj.checked}" ng-bind="obj.text" ng-click="vm.singleChk(obj,data)"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toPermiss()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showDataMes">
+        <div class="middleEdit">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <div class="leftKey">用户组名称:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入用户账号"
+                               ng-model="vm.userGrpObj.grpNm">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">描述:</div>
+                    <div class="rightVal">
+                        <textarea type="text" class="form-control w300 h110" placeholder="请输入描述"
+                                  ng-model="vm.userGrpObj.grpDsc" id="grpDsc"></textarea>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toAdd()"
+                       ng-if="vm.iconType == 'add'">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toEdit()"
+                       ng-if="vm.iconType == 'edit'">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showAlert">
+        <div class="alertEdit">
+            <div class="title">
+                <h2>提示</h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <p style="text-align: center;font-size:16px;margin-top:10px">您确定删除吗？</p>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toDelete()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+</div>

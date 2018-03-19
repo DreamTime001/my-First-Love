@@ -1,0 +1,114 @@
+<div ng-controller="bannerManageController as vm" class="innerTop" ng-init="vm.init()">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">Banner管理</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>Banner管理</h2>
+            </div>
+            <div class="cutPageNav">
+                <ul>
+                    <li ng-class="{'hover':vm.currentPage == 1}" ng-click="vm.goPage('1')">首页banner管理</li>
+                    <li ng-class="{'hover':vm.currentPage == 2}" ng-click="vm.goPage('2')">合作伙伴banner管理</li>
+                </ul>
+            </div>
+            <div class="queryDiv" ng-if="vm.currentPage == 1">
+                <!--<p class="indexBanerTitle">上传资产图片即可，简洁直接秀买点。上传的图片需要以jpg或png形式上传，图片不超过1M</p>-->
+                <!--<a href="javascript:;" class="indexAddButton">添加banner</a>-->
+                <!--<ul class="indexBanerUl">-->
+                    <!--<li>-->
+                        <!--<div class="leftDiv">-->
+                            <!--<div class="numberDiv"></div>-->
+                            <!--<p class="number">1</p>-->
+                            <!--<div class="uploadDiv"></div>-->
+                        <!--</div>-->
+                        <!--<div class="dongIco">-->
+                            <!--<a href="javascript:;" class="delte"></a>-->
+                            <!--<a href="javascript:;" class="toDown"></a>-->
+                            <!--<a href="javascript:;" class="toUp"></a>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="hover">-->
+                        <!--<div class="leftDiv">-->
+                            <!--<div class="numberDiv"></div>-->
+                            <!--<p class="number">2</p>-->
+                            <!--<div class="uploadDiv"></div>-->
+                        <!--</div>-->
+                        <!--<div class="dongIco">-->
+                            <!--<a href="javascript:;" class="delte"></a>-->
+                            <!--<a href="javascript:;" class="toDown"></a>-->
+                            <!--<a href="javascript:;" class="toUp"></a>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <div class="bannerManage" ng-repeat="banner in vm.indexBannerList">
+                    <div class="banCon mt10">
+                        <div class="banUpload">
+                            <div class="banUploadl" ng-class="{'noBg':banner.base_String}">
+                                <img ng-src="{{banner.base_String}}">
+                                <input type="file" accept="image/*" id="{{$index}}" file-model="images"
+                                       onchange="angular.element(this).scope().img_upload(this.files,this,'1')"
+                                       class="upImgInput"/>
+                            </div>
+                            <div class="banUploadrz">
+                                <div class="banUploadr">
+                                    <span>上传资产图片即可，简洁直接秀买点上传的图片需要以jpg或png形式上传，图片不超过1M</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banButton">
+                            <a href="javascript:;" class="banButdel" ng-click="vm.deleteBaner($index,'1')"
+                               ng-if="vm.indexBannerList.length > 1"></a>
+                            <a href="javascript:;" class="banButadd" ng-click="vm.addIndexBaner()"
+                               ng-if="$index == vm.indexBannerList.length-1 && vm.indexBannerList.length <= 9"></a>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center">
+                    <input class="btn btn-info" type="submit" value="提交" ng-click="vm.updateban('1')"
+                           style="padding: 6px 37px;">
+                </div>
+            </div>
+            <div class="queryDiv" ng-if="vm.currentPage == 2">
+                <div class="bannerManage" ng-repeat="banner in vm.bannerObj">
+                    <p class="banTit" ng-bind="'合作伙伴'+ ($index + 1)"></p>
+                    <div class="banCon">
+                        <div class="banUpload">
+                            <div class="banUploadl" ng-class="{'noBg':banner.base_String}">
+                                <img ng-src="{{banner.base_String}}">
+                                <input type="file" accept="image/*" id="{{$index}}" file-model="images"
+                                       onchange="angular.element(this).scope().img_upload(this.files,this,'0')"
+                                       class="upImgInput"/>
+                            </div>
+                            <div class="banUploadrz">
+                                <div class="banUploadr">
+                                    <span>上传资产图片即可，简洁直接秀买点上传的图片需要以jpg或png形式上传，图片不超过1M</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banMes">
+                            <ul>
+                                <li><label>标题</label><input type="text" ng-model="banner.ttl" id="ttl"/></li>
+                                <li><label>新闻link</label><input type="text" ng-model="banner.bLink" id="bLink"/></li>
+                            </ul>
+                        </div>
+                        <div class="banButton">
+                            <a href="javascript:;" class="banButdel" ng-click="vm.deleteBaner($index,'0')"
+                               ng-if="vm.bannerObj.length > 1"></a>
+                            <a href="javascript:;" class="banButadd" ng-click="vm.addPartBaner()"
+                               ng-if="$index == vm.bannerObj.length-1 && vm.bannerObj.length <= 9"></a>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center">
+                    <input class="btn btn-info" type="submit" value="提交" ng-click="vm.updateban('0')"
+                           style="padding: 6px 37px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+body{font:normal 14px 'microsoft yahei', "Helvetica Neue", Helvetica, Arial, sans-serif;color:#686868;background:#f2f2f2;}
+body,div,ul,li,h1,h2,dl,dt,dd{margin:0;padding:0;box-sizing:border-box;} label{font-weight: normal;}li{list-style: none}
+button,input{font-family:inherit }
+
+.f_l{float: left}
+
+.ml10{margin-left:10px}
+
+.logo{width: 210px;height:52px;margin:20px 30px 30px; }
+body,html{height: 100%}
+.login_bg{width: 100%;height:100%;background:#0e90d2}
+.login-top{
+    width: 100%;
+    height: 63px;
+    background: #ffffff url(../images/login.png) no-repeat 47px 9px;
+}
+.login-bgpic{
+    width: 100%;
+    height:853px;
+    background:url("../images/login-bg.png") no-repeat center top;
+    position: relative;
+}
+.login_div{
+    width: 1300px;
+    margin:0 auto;
+    position: relative;
+}
+.login{background: #f2f7fd;width: 362px;padding: 36px 27px 58px;position: absolute;right: 10px;top:244px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 14px rgba(136, 136, 136,.2);
+}
+/*.qrCodeLogin{position: absolute;right: 0;top:0;width:60px;height: 58px;background:url('../img/qrCodeImg.png') no-repeat;transition:0.3s;}*/
+.login h2{ color:#202123; font:normal 25px 'microsoft yahei'; padding-bottom: 55px;
+    text-align: center;
+}
+.loginiup{overflow: hidden}
+.login li{position: relative;margin-bottom: 25px;list-style: none;}
+.icoUser,.icoPw,.icoYzm{position: absolute;left:12px;
+    top: 10px;
+    width: 27px;
+    height: 30px;
+    background: url('../images/icon.png') no-repeat;
+    background-position: 0px -291px;
+}
+.icoPw{background-position: -27px -291px;}
+.icoYzm{background-position:-82px 0;top:10px;}
+.login li input{
+    background: #fff;
+    padding: 0px 0px 0px 50px;
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #e1e3e5;
+    outline: none;
+    border-radius: 5px;
+    color: #959595;
+    font-size: 17px;
+      }
+.login li input.wd50{width:50px;padding-left:5px;padding-right: 10px}
+
+.remember{position: relative; height:20px; margin-top: 10px; line-height: 20px}
+.remember p{position: absolute;right:0;top:0; margin: 0; padding: 0}
+.remember p label{display: inline-block; color:#fff; font:normal 13px 'microsoft yahei'}
+.remember p input{margin: -1px 2px 0 0;overflow: hidden;vertical-align: middle}
+.remember span{position: absolute;right: 0}
+
+.loginBtn{width: 100%; margin-top: 10px; border-radius: 5px;background: #5b94fe; padding:10px 0;border:none;color: #fff;font-size: 20px; display: block}
+.loginBtn:hover,.loginBtn:focus,.loginBtn:active{opacity: .8;}
+
+
+/*.login{height: 300px;width: 500px;margin:0 auto;border:1px solid #ddd;background: #fff;position: absolute;left: 50%;top:50%;margin:-150px 0 0 -250px;box-shadow: 2px 2px 2px rgba(0,0,0,0.05)}*/
+
+/*.login ul{padding:30px 70px}*/
+/*.login li{padding:10px 0 10px 70px;position: relative}*/
+/*.login li label{position: absolute;left: 0;top:20px}*/
+/*.login li input{padding:10px;border:1px solid #ddd;width: 100%;font-size: 15px}*/
+
+.loginBtnBox{padding-left:140px}
+.loginBtnBox button{background: #399bff;border:0;padding:10px 60px;color: #fff;border-radius: 2px}
+
+.footer{text-align: center;line-height: 22px;margin-top: 20px}
+.footer p{margin-bottom: 20px}
+.footer p a{padding:0 10px;}
+.login-foot{
+    background: #323336;
+    width:100%;
+    height: 58px;
+    line-height: 58px;
+    text-align: center;
+    color: rgba(255, 255, 255,.5);
+    font-size: 16px;
+}
+.login-foot span{
+    padding-left: 20px;
+}
+.login-cw{
+    width: 305px;
+    height: 27px;
+    line-height: 24px;
+    margin: 0 auto;
+    background:#feefeb;
+    border: 1px solid #f74821;
+    color: #f74821;
+    font-size: 14px;
+    position: absolute;
+    top: 85px;
+    left: 27px;
+    padding-left:16px;
+    box-sizing: border-box;
+}
+.login-cw img{
+    padding-right:12px;
+    vertical-align: top;
+    margin: 5px 0 0 0;
+}

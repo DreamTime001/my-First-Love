@@ -1,0 +1,142 @@
+<div ng-controller="dataDictionaryController as vm" class="innerTop">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">数据字典维护</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>数据字典维护</h2>
+            </div>
+            <div class="queryDiv">
+                <div class="queryDivIn">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control" placeholder="类别"
+                                       ng-model="vm.query.category">
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control" placeholder="值"
+                                       ng-model="vm.query.numberVal">
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control" placeholder="名称"
+                                       ng-model="vm.query.name">
+                            </div>
+                            <div class="f_l mb10">
+                                <input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+                                <input class="btn btn-warning" type="submit" value="重置" ng-click="vm.resetQuery()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="buttonList" ng-if="vm.list.length > 0">
+                <a href="javascript:;" class="view" ng-click="vm.showDataMesPop('add')">新增</a>
+                <a href="javascript:;" class="edit" ng-click="vm.showDataMesPop('edit')">编辑</a>
+                <a href="javascript:;" class="alt delete" ng-click="vm.showAlertPop()">删除</a>
+            </div>
+            <div class="noDataDiv" ng-if="!vm.list.length">
+                <div class="noData">
+                    <div class="noDataBg"></div>
+                    <p>暂时没有数据～</p>
+                </div>
+            </div>
+            <table class="table tableInfo" ng-if="vm.list.length > 0">
+                <tr>
+                    <th></th>
+                    <th>系统</th>
+                    <th>类别</th>
+                    <th>值</th>
+                    <th>名称</th>
+                    <th>描述</th>
+                </tr>
+                <tr ng-repeat="obj in vm.list" ng-click="vm.selectThis(obj)" ng-class="{'hover':obj.checked}">
+                    <td><i ng-class="{'checked':obj.checked}"></i></td>
+                    <td ng-bind="obj.sysCategory"></td>
+                    <td ng-bind="obj.category"></td>
+                    <td ng-bind="obj.numberVal"></td>
+                    <td ng-bind="obj.zcName"></td>
+                    <td ng-bind="obj.desc"></td>
+
+                </tr>
+            </table>
+            <div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showDataMes">
+        <div class="memberPopEdit gesh">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <div class="leftKey">系统:</div>
+                    <div class="rightVal">
+                        <select class="form-control w150" ng-model="vm.dicObj.sysCategory"
+                                ng-options="o.sysCategory as o.name for o in vm.sysCategoryList">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">类别:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入类别"
+                               ng-model="vm.dicObj.category">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">值:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入值"
+                               ng-model="vm.dicObj.numberVal">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">名称:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入名称"
+                               ng-model="vm.dicObj.zcName">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">描述:</div>
+                    <div class="rightVal">
+                        <textarea type="text" class="form-control w300 h80" placeholder="请输入描述"
+                                  ng-model="vm.dicObj.desc" id="nt"></textarea>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toAdd()" ng-if="vm.iconType == 'add'">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toEdit()" ng-if="vm.iconType == 'edit'">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showAlert">
+        <div class="alertEdit">
+            <div class="title">
+                <h2>提示</h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <p style="text-align: center;font-size:16px;margin-top:10px">您确定删除吗？</p>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toDelete()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+</div>

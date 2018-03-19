@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "errCode": 200,
+  "messageType": "I",
+  "comment": null,
+  "messageCode": null,
+  "message": null,
+  "data": {
+    "pageNum": 2,
+    "pageSize": 10,
+    "size": 10,
+    "startRow": 11,
+    "endRow": 20,
+    "total": 37,
+    "pages": 4,
+    "list": [
+      {
+        "bgnDt": "1",
+        "cmp_nm": "厦门鼓浪有限公司",
+        "crt_tm": "20171030160802",
+        "ct": "北京市北京市",
+        "ctId": "1000",
+        "lvl": "",
+        "openAccount": false,
+        "org_cd": 278,
+        "prvncId": "1000",
+        "sts": "通过",
+        "sts_crdt": 1,
+        "timeLimit": 0
+      },
+      {
+        "bgnDt": "1",
+        "cmp_nm": "G控股公司",
+        "crt_tm": "20171020151730",
+        "ct": "北京市北京市",
+        "ctId": "1000",
+        "lvl": "",
+        "openAccount": false,
+        "org_cd": 232,
+        "prvncId": "1000",
+        "sts": "退回修改",
+        "sts_crdt": 0,
+        "timeLimit": 0
+      },
+      {
+        "bgnDt": "1",
+        "cmp_nm": "北京中科信息有限公司",
+        "crt_tm": "20171012172255",
+        "ct": "北京市北京市",
+        "ctId": "1000",
+        "lvl": "",
+        "openAccount": false,
+        "org_cd": 143,
+        "prvncId": "1000",
+        "sts": "通过",
+        "sts_crdt": 1,
+        "timeLimit": 0
+      }
+    ],
+    "firstPage": 1,
+    "prePage": 1,
+    "nextPage": 3,
+    "lastPage": 4,
+    "isFirstPage": false,
+    "isLastPage": false,
+    "hasPreviousPage": true,
+    "hasNextPage": true,
+    "navigatePages": 8,
+    "navigatepageNums": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "dataMap": {}
+}

@@ -1,0 +1,141 @@
+<div  ng-controller="newsBulletinController as vm" class="innerTop">
+	<ol class="breadcrumb">
+		<li>
+			<a href="javascript:;" ui-sref="home" >首页</a>
+		</li>
+		<li class="active">新闻公告</li>
+	</ol>
+	<div class="pLR30">
+		<div class="rightDiv">
+			<div class="rightContTitle">
+				<h2>新闻公告</h2>
+			</div>
+			<div class="queryDiv">
+				<div class="queryDivIn">
+					<form class="form-horizontal">
+						<div>
+							<div class="f_l mr15 mb10">
+								<input type="text" class="form-control" placeholder="请输入标题"
+									   ng-model="vm.query.ttl">
+							</div>
+							<div class="f_l mb10 mr10">
+								<input type="text" class="form-control w160 mr5" id="times" placeholder="请选择日期"
+									   ng-model="vm.query.times" readonly>
+							</div>
+							<div class="f_l mb10">
+								<input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+								<input class="btn btn-info mr15" type="submit" value="新增" ng-click="vm.showNewsMesPop('add')">
+								<input class="btn btn-warning" type="submit" value="重置" ng-click="vm.resetQuery()">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="buttonList" ng-if="vm.list.length > 0">
+
+				<a href="javascript:;" class="edit" ng-click="vm.showNewsMesPop('edit')">修改</a>
+				<a href="javascript:;" class="alt delete" ng-click="vm.showAlertPop()">删除</a>
+			</div>
+			<div class="noDataDiv" ng-if="!vm.list.length">
+				<div class="noData">
+					<div class="noDataBg"></div>
+					<p>暂时没有数据～</p>
+				</div>
+			</div>
+			<table class="table tableInfo" ng-if="vm.list.length > 0">
+				<tr>
+					<th></th>
+					<th>标题</th>
+					<th>日期</th>
+					<th>新闻预览</th>
+				</tr>
+				<tr ng-repeat="obj in vm.list" ng-click="vm.selectThis(obj)" ng-class="{'hover':obj.checked}">
+					<td><i ng-class="{'checked':obj.checked}"></i></td>
+					<td ng-bind="obj.ttl"></td>
+					<td ng-bind="obj.createTime"></td>
+					<td ng-bind="obj.nt"></td>
+				</tr>
+			</table>
+			<div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+		</div>
+	</div>
+	<div class="mask blackMask mask_visible" ng-if="vm.showNewsMes">
+		<div class="memberPopEdit gesh">
+			<div class="title">
+				<h2 ng-bind="vm.titleView"></h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+				<p ng-bind="vm.erroeMessage"></p>
+			</div>
+			<ul class="inDiv">
+				<li>
+					<div class="leftKey">标题:</div>
+					<div class="rightVal">
+						<input type="text" class="form-control w300" placeholder="请输入标题" ng-model="vm.newsObj.ttl" id="ttl">
+					</div>
+				</li>
+				<li>
+					<div class="leftKey">日期:</div>
+					<div class="rightVal">
+						<input type="text" class="form-control w300 mr5" placeholder="请选择日期" ng-model="vm.newsObj.createTime" readonly id="createTime">
+					</div>
+				</li>
+				<li>
+					<div class="leftKey">新闻内容:</div>
+					<div class="rightVal">
+						<textarea type="text" class="form-control w300 h80" placeholder="请输入公司简介"
+								  ng-model="vm.newsObj.nt" id="nt"></textarea>
+					</div>
+				</li>
+				<li style="height:auto;overflow: hidden;width:100%;padding-top:10px">
+					<div class="leftKey">相关图片:</div>
+					<div class="rightVal">
+						<div class="imgOut">
+							<div ng-repeat="item in thumb" class="imgDiv" show-delete style="width:290px;height:140px;">
+								<div class="deleteDiv" ng-if="item">
+									<span ng-click="img_del($index,1)" class="imgDele"></span>
+								</div>
+								<label ng-if="item">
+									<img ng-src="{{item}}" style="width:290px;height:140px"/>
+								</label>
+							</div>
+							<div class="upImgIco" ng-if="addIcon" style="width:290px;height:140px;background-size:100% 100%">
+								<input type="file" id="one-input" accept="image/*" file-model="images" onchange="angular.element(this).scope().img_upload(this.files,1)" class="upImgInput"/>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="leftKey">链接地址:</div>
+					<div class="rightVal">
+						<input type="text" class="form-control w300 mr5" placeholder="链接地址" ng-model="vm.newsObj.link"  id="link">
+					</div>
+				</li>
+			</ul>
+			<div style="text-align: center;margin-top:10px">
+				<input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.toAdd()" ng-if="vm.iconType == 'add'">
+				<input class="btn btn-info mr15" type="submit" value="提交" ng-click="vm.toEdit()" ng-if="vm.iconType == 'edit'">
+				<input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+			</div>
+		</div>
+	</div>
+	<div class="mask blackMask mask_visible" ng-if="vm.showAlert">
+		<div class="alertEdit">
+			<div class="title">
+				<h2>提示</h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<ul class="inDiv">
+				<li>
+					<p style="text-align: center;font-size:16px;margin-top:10px">您确定删除吗？</p>
+				</li>
+			</ul>
+			<div style="text-align: center;margin-top:10px">
+				<input class="btn btn-info mr15" type="submit" value="确认" ng-click="delete()" ng-if="vm.iconDelete =='imgDele'">
+				<input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toDelete()" ng-if="vm.iconDelete == 'newsDele'">
+				<input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+			</div>
+		</div>
+	</div>
+</div>

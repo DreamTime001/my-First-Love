@@ -1,0 +1,279 @@
+<div  ng-controller="transferOrderConfController as vm" class="innerTop" ng-init="vm.queryState()">
+	<ol class="breadcrumb">
+		<li>
+			<a href="javascript:;" ui-sref="home" >首页</a>
+		</li>
+		<li class="active">转账指令确认</li>
+	</ol>
+	<div class="pLR30">
+		<div class="rightDiv">
+			<div class="rightContTitle">
+				<h2>转账指令确认</h2>
+			</div>
+			<div class="queryDiv">
+				<div class="queryDivIn">
+					<form class="form-horizontal">
+						<div>
+							<div class="f_l mr15 mb10">
+								<input type="text" class="form-control" placeholder="请输入项目名关键字"
+									   ng-model="vm.query.astName">
+							</div>
+							<div class="f_l mb10">
+								<input type="text" class="form-control w160 mr5" id="crt_day_from" placeholder="请选择开始日期"
+									   ng-model="vm.query.crt_day_from" readonly>
+							</div>
+							<div class="f_l mr5" style="line-height: 30px">-</div>
+							<div class="f_l mr15 mb10">
+								<input type="text" class="form-control w160 mr5" id="crt_day_to" placeholder="请选择结束日期"
+									   ng-model="vm.query.crt_day_to" readonly>
+							</div>
+							<div class="f_l mr15 mb10">
+								<select class="form-control w150" ng-model="vm.query.sts"
+										ng-options="o.stsCode as o.stsDsc for o in vm.stateList">
+									<option value="">请选择状态</option>
+								</select>
+							</div>
+							<div class="f_l mr15 mb10">
+								<select class="form-control w150" ng-model="vm.query.tp"
+										ng-options="o.tpCode as o.tpDsc for o in vm.instructList">
+									<option value="">请选择指令类型</option>
+								</select>
+							</div>
+							<div class="f_l mb10">
+								<input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+								<input class="btn btn-warning" type="submit" value="重置" ng-click="vm.resetQuery()">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="buttonList" ng-if="vm.list.length > 0">
+				<a href="javascript:;" class="lock" ng-click="vm.lock()">锁定</a>
+				<a href="javascript:;" class="examine" ng-click="vm.audit()">审核</a>
+				<a href="javascript:;" class="view" ng-click="vm.assetView()">资产信息查看</a>
+			</div>
+			<div class="noDataDiv" ng-if="!vm.list.length">
+				<div class="noData">
+					<div class="noDataBg"></div>
+					<p>暂时没有数据～</p>
+				</div>
+			</div>
+			<table class="table tableInfo" ng-if="vm.list.length > 0">
+				<tr>
+					<th></th>
+					<th>发生日期</th>
+					<th><div class="tabCell">卖方机构</div></th>
+					<th><div class="tabCell">买方机构</div></th>
+					<th><div class="tabCell">项目名称</div></th>
+					<th>转账金额(万元)</th>
+					<th>类型</th>
+					<th>状态</th>
+					<th>锁定状态</th>
+					<th>锁定人</th>
+					<th>锁定日期</th>
+				</tr>
+				<tr ng-repeat="member in vm.list" ng-click="vm.selectThis(member)" ng-class="{'hover':member.checked}">
+					<td><i ng-class="{'checked':member.checked}"></i></td>
+					<td ng-bind="member.crt_day"></td>
+					<td><div class="tabCell" ng-bind="member.cmp_nm_i"></div></td>
+					<td><div class="tabCell" ng-bind="member.cmp_nm_o"></div></td>
+					<td><div class="tabCell" ng-bind="member.astName"></div></td>
+					<td ng-bind="member.amt"></td>
+					<td ng-bind="member.ty"></td>
+					<td ng-bind="member.stsNm"></td>
+					<td ng-bind="member.org_locaked_flagName"></td>
+					<td ng-bind="member.locaked_user"></td>
+					<td ng-bind="member.locaked_day"></td>
+
+
+				</tr>
+			</table>
+			<div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+
+		</div>
+	</div>
+	<!--审核弹窗-->
+	<div class="mask blackMask mask_visible" ng-if="vm.showAuditPop">
+		<div class="smallEdit" style="height: 400px;width: 560px;">
+			<div class="title">
+				<h2 ng-bind="vm.titleView"></h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<ul class="inDiv" style="height: 300px;">
+				<li>
+					<div class="leftKey">转账结果:</div>
+					<div class="rightVal">
+						<label><input type="radio" name="rcmnd" ng-model="vm.transObj.rslt" value="0"/>转账成功</label>
+						<label><input type="radio" name="rcmnd" ng-model="vm.transObj.rslt" value="9"/>转账失败</label>
+					</div>
+				</li>
+				<li style="height:auto;overflow: hidden;width:100%;padding-top:10px">
+					<div class="leftKey">上传文件:</div>
+					<div class="rightVal">
+						<div class="imgOut">
+							<div ng-repeat="item in thumb" class="imgDiv" show-delete style="width:290px;height:140px;">
+								<div class="deleteDiv" ng-if="item">
+									<span ng-click="img_del($index,1)" class="imgDele"></span>
+								</div>
+								<label ng-if="item">
+									<img ng-src="{{item}}" style="width:290px;height:140px"/>
+								</label>
+							</div>
+							<div class="upImgIco" ng-if="addIcon" style="width:290px;height:140px;background-size:100% 100%">
+								<input type="file" id="one-input" accept="image/*" file-model="images" onchange="angular.element(this).scope().img_upload(this.files,1)" class="upImgInput"/>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li style="height: 76px;">
+					<div class="leftKey"></div>
+					<div class="rightVal" style="width: 360px;float: right;padding-right: 50px;">
+						上传资料需要以PNG,JPG格式上传，每个上传文件不超过10M
+					</div>
+				</li>
+				<li>
+					<div class="leftKey">备注:</div>
+					<div class="rightVal">
+                        <textarea class="form-control w300" placeholder="请输入备注"
+								  ng-model="vm.transObj.rsltInf" id="rvwInf"></textarea>
+					</div>
+				</li>
+				<li style="height:auto;overflow: hidden;width:100%;padding-top:10px" ng-if="vm.tyCode==1||vm.tyCode==6">
+					<div class="leftKey">支付凭证</div>
+					<div class="rightVal">
+						<div class="imgOut" style=" width: 290px; height: 140px; background-size: 100% 100%;">
+							<img ng-src="{{vm.urlPath}}">
+						</div>
+					</div>
+				</li>
+
+			</ul>
+			<div style="text-align: center;margin-top:10px">
+				<input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toAudit()">
+				<input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+			</div>
+		</div>
+	</div>
+	<div class="mask blackMask mask_visible" ng-if="vm.showAlert">
+		<div class="alertEdit">
+			<div class="title">
+				<h2>提示</h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<ul class="inDiv">
+				<li>
+					<p style="text-align: center;font-size:16px;margin-top:10px">您确定删除吗？</p>
+				</li>
+			</ul>
+			<div style="text-align: center;margin-top:10px">
+				<input class="btn btn-info mr15" type="submit" value="确认" ng-click="delete()" ng-if="vm.iconDelete =='imgDele'">
+				<!--<input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toDelete()" ng-if="vm.iconDelete == 'newsDele'">-->
+				<input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePopPic()">
+			</div>
+		</div>
+	</div>
+	<!--资产信息查看-->
+	<div class="mask blackMask mask_visible" ng-if="vm.showAssetView">
+		<div class="memberPopView">
+			<div class="title">
+				<h2 ng-bind="vm.titleView"></h2>
+				<i ng-click="vm.closePop()"></i>
+			</div>
+			<ul class="inDiv">
+				<li>
+					<div class="leftKey">资产名称:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.jst_nm"></div>
+				</li>
+				<li>
+					<div class="leftKey">发布者名称:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.pcmp_nm"></div>
+				</li>
+				<li>
+					<div class="leftKey">身份类型:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.id_flag"></div>
+				</li>
+				<li>
+					<div class="leftKey">发布者身份:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.crt_p_id"></div>
+				</li>
+				<li>
+					<div class="leftKey">所在地区:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.provnc+ct"></div>
+				</li>
+				<li>
+					<div class="leftKey">详细地址:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.address"></div>
+				</li>
+				<li>
+					<div class="leftKey">转让价格:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.jtrns_prc"></div>
+				</li>
+				<li>
+					<div class="leftKey">资产类型:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.jtp"></div>
+				</li>
+				<li>
+					<div class="leftKey">转让方式:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.jtrns_nm"></div>
+				</li>
+				<li>
+					<div class="leftKey">标的面积:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.st_cge"></div>
+				</li>
+				<li>
+					<div class="leftKey">房产时间:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.hos_dt"></div>
+				</li>
+				<li>
+					<div class="leftKey">可否议价:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.st_tkprc"></div>
+				</li>
+				<li>
+					<div class="leftKey">资产来源:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.st_from"></div>
+				</li>
+				<li>
+					<div class="leftKey">资产估价:</div>
+					<div class="rightVal" ng-bind="vm.orgInfo.jss_prc"></div>
+				</li>
+				<li>
+					<div class="leftKey">税费承担:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.tax_fee"></div>
+				</li>
+				<li>
+					<div class="leftKey">产证编号:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.hos_id"></div>
+				</li>
+				<li>
+					<div class="leftKey">层高/总高:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.flr_high"></div>
+				</li>
+				<li>
+					<div class="leftKey">容积率:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.vlm_rt"></div>
+				</li>
+				<li>
+					<div class="leftKey">能否改建:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.st_rebuild"></div>
+				</li>
+				<li>
+					<div class="leftKey">租赁情况:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.hos_rent"></div>
+				</li>
+				<li>
+					<div class="leftKey">装修情况:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.hos_ftmnt"></div>
+				</li>
+				<li>
+					<div class="leftKey">产权年限:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.property_life"></div>
+				</li>
+				<li>
+					<div class="leftKey">资产简介:</div>
+					<div class="rightVal lh30" ng-bind="vm.orgInfo.st_dvntg"></div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</div>

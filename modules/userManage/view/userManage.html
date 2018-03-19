@@ -1,0 +1,190 @@
+<div ng-controller="userManageController as vm" class="innerTop" ng-init="vm.init()">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">用户管理</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>用户管理</h2>
+            </div>
+            <div class="queryDiv">
+                <div class="queryDivIn">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w160" ng-model="vm.query.grpCd"
+                                        ng-options="o.grpCd as o.grpNm for o in vm.getGrpList">
+                                    <option value="">所属用户组</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control" placeholder="用户账号"
+                                       ng-model="vm.query.loginName">
+                            </div>
+                            <div class="f_l mb10">
+                                <input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="buttonList" ng-if="vm.list.length > 0">
+                <a href="javascript:;" class="add" ng-click="vm.showDataMesPop('add')">新增</a>
+                <a href="javascript:;" class="edit" ng-click="vm.showDataMesPop('edit')">编辑</a>
+                <a href="javascript:;" class="passRest" ng-click="vm.showPasswordPop()">密码重置</a>
+                <a href="javascript:;" class="alt delete" ng-click="vm.showAlertPop()">删除</a>
+            </div>
+            <div class="noDataDiv" ng-if="!vm.list.length">
+                <div class="noData">
+                    <div class="noDataBg"></div>
+                    <p>暂时没有数据～</p>
+                </div>
+            </div>
+            <table class="table tableInfo" ng-if="vm.list.length > 0">
+                <tr>
+                    <th></th>
+                    <th>用户账号</th>
+                    <th>账号状态</th>
+                    <th>用户名称</th>
+                    <th>所属用户组</th>
+                    <th>最近登入时间</th>
+                </tr>
+                <tr ng-repeat="obj in vm.list" ng-click="vm.selectThis(obj)" ng-class="{'hover':obj.checked}">
+                    <td><i ng-class="{'checked':obj.checked}"></i></td>
+                    <td ng-bind="obj.loginName"></td>
+                    <td ng-bind="obj.sts"></td>
+                    <td ng-bind="obj.name"></td>
+                    <td ng-bind="obj.grpNm"></td>
+                    <td ng-bind="obj.lgn_tm"></td>
+                </tr>
+            </table>
+            <div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showDataMes">
+        <div class="memberPopEdit gesh">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <div class="leftKey">用户账号:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入用户账号"
+                               ng-model="vm.userObj.loginName">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">用户名称:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入用户名称"
+                               ng-model="vm.userObj.name">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">所属用户组:</div>
+                    <div class="rightVal">
+                        <select class="form-control w300" ng-model="vm.userObj.grp_cd"
+                                ng-options="o.grpCd as o.grpNm for o in vm.getGrpList">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </li>
+                <li ng-if="vm.iconType == 'add'">
+                    <div class="leftKey">所属机构:</div>
+                    <div class="rightVal">
+                        <select class="form-control w300" ng-model="vm.userObj.sorg_cd"
+                                ng-options="o.org_cd as o.cmp_nm for o in vm.getUserList">
+                            <option value="">中民国资有限公司</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">联系电话:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入名称"
+                               ng-model="vm.userObj.mobile">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">邮箱:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w300" placeholder="请输入名称"
+                               ng-model="vm.userObj.emailAddress">
+                    </div>
+                </li>
+                <li ng-if="vm.iconType == 'edit'">
+                    <div class="leftKey">是否冻结:</div>
+                    <div class="rightVal">
+                        <label><input type="radio" name="sts" ng-model="vm.userObj.sts" value="1"/>是</label>
+                        <label><input type="radio" name="sts" ng-model="vm.userObj.sts" value="0"/>否</label>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toAdd()"
+                       ng-if="vm.iconType == 'add'">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toEdit()"
+                       ng-if="vm.iconType == 'edit'">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--确认-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showAlert">
+        <div class="alertEdit">
+            <div class="title">
+                <h2>提示</h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <p style="text-align: center;font-size:16px;margin-top:10px">您确定删除吗？</p>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toDelete()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <!--密码重置-->
+    <div class="mask blackMask mask_visible" ng-if="vm.showPassword">
+        <div class="smallEdit">
+            <div class="title">
+                <h2>密码修改</h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv" ng-if="vm.showErrorMessage">
+                <p ng-bind="vm.erroeMessage"></p>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <div class="leftKey">密码:</div>
+                    <div class="rightVal">
+                        <input type="password" class="form-control w300" placeholder="密码"
+                               ng-model="vm.password">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">确认密码:</div>
+                    <div class="rightVal">
+                        <input type="password" class="form-control w300" placeholder="密码"
+                               ng-model="vm.confirmPassword">
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.toPassword()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+</div>

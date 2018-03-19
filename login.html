@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="login" lang="en" ng-controller="loginController as vm">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="login_bg">
+<div class="login-top"></div>
+<div class="login-bgpic">
+<div class="login_div">
+    <div class="login">
+        <h2>欢迎登录</h2>
+        <div class="login-cw" ng-if="vm.errorMsgIsShow" ><img src="static/images/cw.png"><span ng-bind="vm.errorMsg"></span></div>
+        <div>
+            <form>
+            <ul class="loginiup">
+                <li><input placeholder="请输入用户名" class="form-control" type="text" ng-model="vm.query.loginName" required valid = "account" id="loginName" ng-keypress="vm.loginKeyPress($event)"><i class="icoUser"></i></li>
+                <li><input placeholder="请输入密码" class="form-control" type="password" ng-model="vm.query.password" required id="password" ng-keypress="vm.loginKeyPress($event)"> <i class="icoPw"></i></li>
+            </ul>
+            <button class="loginBtn" ng-click="vm.login()"  type="button">登 录</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="login-foot">沪ICP备17036789号-2 <span>©2017 masterarb.com All rights reserved</span></div>
+<script src="static/js/jquery/jquery-1.10.2.min.js"></script>
+<script src="static/js/angular/angular.min.js"></script>
+<script src="static/js/angular/angular-cookies.min.js"></script>
+<script src="static/js/md5.js"></script>
+
+<!--<script src="core/configs/developConfig.js"></script>-->
+<script src="core/configs/testConfig.js"></script>
+<script src="core/services/service.js"></script>
+<script src="core/services/layer.js"></script>
+<script src="core/services/util.js"></script>
+
+<script src="modules/login/controller/loginController.js"></script>
+</body>
+</html>

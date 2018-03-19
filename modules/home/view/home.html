@@ -1,0 +1,14 @@
+<div ng-controller="homeController as vm" class="homeTop">
+	<div>
+		<div class="rightDiv">
+			<div class="indexTitle">
+				<h2>欢迎登录非标资产交易后台管理系统！</h2>
+			</div>
+			<div class="indexEnt">
+				<div ng-repeat="obj in vm.indexList" ng-class="obj.rl_class" ui-sref="{{obj.rl_class}}">
+					<p ng-bind="obj.rl_name"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

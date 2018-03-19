@@ -1,0 +1,153 @@
+<div ng-controller="surveyServiceManageController as vm" class="innerTop" ng-init="vm.getPrvnc()">
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:;" ui-sref="home">首页</a>
+        </li>
+        <li class="active">尽调服务管理</li>
+    </ol>
+    <div class="pLR30">
+        <div class="rightDiv">
+            <div class="rightContTitle">
+                <h2>尽调服务管理</h2>
+            </div>
+            <div class="queryDiv">
+                <div class="queryDivIn">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.prvnc"
+                                        ng-options="o.cd_pr as o.name for o in vm.prvnc"
+                                        ng-change="vm.getSelect(vm.query.prvnc,'page')">
+                                    <option value="">请选择省</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.city"
+                                        ng-options="o.cd_city as o.name for o in vm.province">
+                                    <option value="">请选择市</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <select class="form-control w150" ng-model="vm.query.serviceStatus"
+                                        ng-options="o.serverState as o.name for o in vm.serverStateList">
+                                    <option value="">服务状态</option>
+                                </select>
+                            </div>
+                            <div class="f_l mr15 mb10">
+                                <input type="text" class="form-control" placeholder="请输入项目名或者机构名"
+                                       ng-model="vm.query.orgNameOrStnm">
+                            </div>
+                            <div class="f_l mb10">
+                                <input class="btn btn-info mr15" type="submit" value="查询" ng-click="vm.submit()">
+                                <input class="btn btn-warning" type="submit" value="重置" ng-click="vm.resetQuery()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="buttonList" ng-if="vm.list.length > 0">
+                <!--<a href="javascript:;" class="view" ng-click="vm.assetView()">资产信息查看</a>-->
+                <a href="javascript:;" class="orders" ng-click="vm.orders()">接单</a>
+                <a href="javascript:;" class="uploadBest" ng-click="vm.uploadBest('upload')">上传尽调信息</a>
+                <a href="javascript:;" class="updataBest" ng-click="vm.uploadBest('edit')">修改尽调信息</a>
+            </div>
+            <div class="noDataDiv" ng-if="!vm.list.length">
+                <div class="noData">
+                    <div class="noDataBg"></div>
+                    <p>暂时没有数据～</p>
+                </div>
+            </div>
+            <table class="table tableInfo" ng-if="vm.list.length > 0">
+                <tr>
+                    <th></th>
+                    <th>项目名称</th>
+                    <th>所在城市</th>
+                    <th>尽调状态</th>
+                    <th>创建时间</th>
+                    <th width="20%">尽调详情</th>
+                </tr>
+                <tr ng-repeat="obj in vm.list" ng-click="vm.selectThis(obj)" ng-class="{'hover':obj.checked}">
+                    <td><i ng-class="{'checked':obj.checked}"></i></td>
+                    <td ng-bind="obj.st_nm"></td>
+                    <td ng-bind="obj.city"></td>
+                    <td ng-bind="obj.sts_nm"></td>
+                    <td ng-bind="obj.crt_tm"></td>
+                    <td>
+                        <span ng-bind="obj.oper_text" ng-if="obj.oper_text" style="padding:0;text-align: left"></span>
+                        <div ng-if="obj.oper_ty == 3">
+                            <span style="padding:0;width:120px;text-align: left">抢单：</span><a href="javascript:;"
+                                                                                              class="tableIcon yes"
+                                                                                              ng-click="vm.operaSrvc(obj.jdid)">确定</a>
+                        </div>
+                        <div ng-if="obj.oper_ty == 6">
+                            <span style="padding:0;width:120px;text-align: left">指派接受：</span><a href="javascript:;"
+                                                                                                class="tableIcon yes"
+                                                                                                ng-click="vm.assign(1,obj.jdid)">是</a><a
+                                href="javascript:;" class="tableIcon no" ng-click="vm.assign(2,obj.jdid)">否</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="page" paging page-object="vm.query" click-function="vm.getPagedDataAsync"></div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showAlertPop">
+        <div class="alertEdit">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <ul class="inDiv">
+                <li>
+                    <p style="text-align: center;font-size:16px;margin-top:10px">您确定处理<span ng-bind="vm.st_nm"
+                                                                                            class="c_e61915"></span>的尽调报告吗？
+                    </p>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确认" ng-click="vm.confirmOrders()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+    <div class="mask blackMask mask_visible" ng-if="vm.showOrdersPop">
+        <div class="middleEdit">
+            <div class="title">
+                <h2 ng-bind="vm.titleView"></h2>
+                <i ng-click="vm.closePop()"></i>
+            </div>
+            <div class="errorMessageDiv">
+                <p ng-bind="vm.erroeMessage" ng-if="vm.showErrorMessage"></p>
+            </div>
+            <ul class="inDiv" style="margin-top:0">
+                <li>
+                    <div class="leftKey">负责人:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control" placeholder="请输入负责人姓名" ng-model="vm.operaSrvcObj.per_nm"
+                               id="per_nm">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">联系电话:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control" placeholder="请输入联系电话" ng-model="vm.operaSrvcObj.tel"
+                               id="tel">
+                    </div>
+                </li>
+                <li>
+                    <div class="leftKey">预计完成日期:</div>
+                    <div class="rightVal">
+                        <input type="text" class="form-control w160 mr5" id="srvc_fin_tm" placeholder="请选择预计完成日期"
+                               ng-model="vm.operaSrvcObj.srvc_fin_tm" readonly>
+                    </div>
+                </li>
+            </ul>
+            <div style="text-align: center;margin-top:10px">
+                <input class="btn btn-info mr15" type="submit" value="确定" ng-click="vm.toOrder()">
+                <input class="btn btn-warning" type="submit" value="取消" ng-click="vm.closePop()">
+            </div>
+        </div>
+    </div>
+
+
+</div>
